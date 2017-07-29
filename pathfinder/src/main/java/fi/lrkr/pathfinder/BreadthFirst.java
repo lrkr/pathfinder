@@ -1,13 +1,11 @@
 package fi.lrkr.pathfinder;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BreadthFirst extends Pathfinder {
 
     private ArrayDeque<Location> queue;
-    private List<Location> visited;
 
     public BreadthFirst(Maze maze) {
         super(maze);
@@ -24,8 +22,8 @@ public class BreadthFirst extends Pathfinder {
             }
             List<Location> adj = getAdjacent(current);
             for (Location location : adj) {
-                if (!visited.contains(location)) {
-                    visited.add(location);
+                if (visited[location.getY()][location.getX()] == 0) {
+                    visited[location.getY()][location.getX()] = 1;
                     location.setPrev(current);
                     queue.add(location);
                 }
@@ -37,8 +35,7 @@ public class BreadthFirst extends Pathfinder {
     private void init() {
         this.queue = new ArrayDeque<>();
         this.queue.add(maze.getStart());
-        this.visited = new ArrayList<>();
-        this.visited.add(maze.getStart());
+        visited[maze.getStart().getY()][maze.getStart().getX()] = 1;
     }
 
 }

@@ -7,21 +7,22 @@ import java.util.Stack;
 abstract public class Pathfinder {
 
     protected Maze maze;
+    protected int[][] visited;
 
     public Pathfinder(Maze maze) {
         this.maze = maze;
+        this.visited = new int[maze.getMaze().length][maze.getMaze()[0].length];
     }
-    
+
     abstract public void solve();
-    
+
     protected void printPath(Location l) {
         Stack<Location> path = new Stack<>();
-        while (l.getPrev() != null) {
+        while (l != null) {
             path.push(l);
             l = l.getPrev();
         }
-        path.push(l);
-        while(!path.isEmpty()) {
+        while (!path.isEmpty()) {
             System.out.println(path.pop());
         }
     }
