@@ -1,6 +1,9 @@
 package fi.lrkr.pathfinder;
 
+import java.awt.Color;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
 
@@ -8,22 +11,25 @@ abstract public class Pathfinder {
 
     protected Maze maze;
     protected int[][] visited;
+    protected Deque<Step> steps;
 
     public Pathfinder(Maze maze) {
+        this.steps = new ArrayDeque<>();
         this.maze = maze;
         this.visited = new int[maze.getMaze().length][maze.getMaze()[0].length];
+        visited[maze.getStart().getY()][maze.getStart().getX()] = 1;
     }
 
-    abstract public void solve();
+    abstract public Deque<Step> solve();
 
-    protected void printPath(Location l) {
+    protected void createPath(Location l) {
         Stack<Location> path = new Stack<>();
         while (l != null) {
             path.push(l);
             l = l.getPrev();
         }
         while (!path.isEmpty()) {
-            System.out.println(path.pop());
+            steps.add(new Step(path.pop(), Color.red));
         }
     }
 
