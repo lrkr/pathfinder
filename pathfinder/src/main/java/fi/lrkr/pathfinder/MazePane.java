@@ -9,16 +9,27 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+/**
+ * Class is used for visualizing the Maze's squares.
+ */
 public class MazePane extends JPanel {
 
     private Maze maze;
     private JLayeredPane boardPane;
     private JLabel[][] labelMap;
 
+    /**
+     * Constructor for creating the object.
+     *
+     * @param maze Maze object from which the visualization is created
+     */
     public MazePane(Maze maze) {
         this.maze = maze;
     }
 
+    /**
+     * Initializes the needed JLabels for the Maze visualization.
+     */
     public void init() {
         int width = maze.getWidth();
         int height = maze.getHeight();
@@ -54,6 +65,11 @@ public class MazePane extends JPanel {
         }
     }
 
+    /**
+     * Paints a square with a color
+     *
+     * @param s Step object which associates a color to a Location.
+     */
     public void paintCell(Step s) {
         labelMap[s.getLocation().getY()][s.getLocation().getX()].setBackground(s.getColor());
     }

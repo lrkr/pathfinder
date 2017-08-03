@@ -5,10 +5,18 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 
+/**
+ * Class implements breath first search.s
+ */
 public class BreadthFirst extends Pathfinder {
 
     private ArrayDeque<Location> queue;
 
+    /**
+     * Constructor for creating BreathFirst search objects.
+     *
+     * @param maze Maze on which the BFS is used on
+     */
     public BreadthFirst(Maze maze) {
         super(maze);
         this.queue = new ArrayDeque<>();
@@ -35,6 +43,6 @@ public class BreadthFirst extends Pathfinder {
             }
         }
         System.out.println("No path found");
-        return new ArrayDeque<>();
+        return steps;
     }
 }

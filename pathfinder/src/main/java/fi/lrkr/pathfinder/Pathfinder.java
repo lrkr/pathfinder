@@ -7,21 +7,44 @@ import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * Abstract class for Pathfinding algorithms. Provides useful methods that are
+ * needed for different Pathfinder implementations.
+ *
+ */
 abstract public class Pathfinder {
 
     protected Maze maze;
     protected int[][] visited;
     protected Deque<Step> steps;
 
+    /**
+     * Constructor for creating Pathfinder objects.
+     *
+     * @param maze Maze on which the Pathfinder is used
+     */
     public Pathfinder(Maze maze) {
         this.steps = new ArrayDeque<>();
         this.maze = maze;
-        this.visited = new int[maze.getMaze().length][maze.getMaze()[0].length];
+        this.visited = new int[maze.getHeight()][maze.getWidth()];
         visited[maze.getStart().getY()][maze.getStart().getX()] = 1;
     }
 
+    /**
+     * Abstract method for solving the Maze. Each implementation uses its own
+     * solve method.
+     *
+     * @return Queue of Step objects used for visualization
+     */
     abstract public Deque<Step> solve();
 
+    /**
+     * After Pathfinder has reached the end this method backtracks to the start
+     * to create the route.
+     *
+     * @param l Pathfinder's last Location which is the Maze's end Location if
+     * Pathfinder was successful.
+     */
     protected void createPath(Location l) {
         Stack<Location> path = new Stack<>();
         while (l != null) {
@@ -33,10 +56,22 @@ abstract public class Pathfinder {
         }
     }
 
-    protected boolean checkWin(Location l1) {
-        return maze.getEnd().equals(l1);
+    /**
+     * Checks if the current location is the Maze's end location.
+     *
+     * @param l Location to be checked
+     * @return Boolean value signifying if the pathfinder is at the end or not
+     */
+    protected boolean checkWin(Location l) {
+        return maze.getEnd().equals(l);
     }
 
+    /**
+     * Creates a list of valid Locations adjacent to a Location.
+     *
+     * @param l Location from which adjacents are checked
+     * @return List of valid adjacent Locations
+     */
     protected List<Location> getAdjacent(Location l) {
         ArrayList<Location> adj = new ArrayList<>();
         Location up = new Location(l.getX(), l.getY() - 1);
@@ -58,6 +93,12 @@ abstract public class Pathfinder {
         return adj;
     }
 
+    /**
+     * Checks the validity of a location. Location needs to be within the Maze.
+     *
+     * @param l Location to be checked
+     * @return Boolean value for Locations validity
+     */
     private boolean isValid(Location l) {
         int x = l.getX();
         int y = l.getY();

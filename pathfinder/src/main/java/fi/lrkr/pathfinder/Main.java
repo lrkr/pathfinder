@@ -12,7 +12,7 @@ public class Main {
         GUI g = new GUI(maze);
         SwingUtilities.invokeLater(g);
         //muuten null pointtaa joskus??
-        Thread.sleep(1111);
+        Thread.sleep(3000);
         Long time = System.currentTimeMillis();
         while (!steps.isEmpty()) {
             if (System.currentTimeMillis() > time + 20) {
