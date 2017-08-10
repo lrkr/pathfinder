@@ -28,8 +28,7 @@ public class Queue<T> {
         if (end >= queue.length) {
             doubleSize();
         }
-        queue[end] = t;
-        end++;
+        queue[end++] = t;
     }
 
     public T removeFirst() {

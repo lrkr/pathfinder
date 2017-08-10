@@ -1,4 +1,4 @@
-package fi.lrkr.pathfinder;
+package fi.lrkr.pathfinder.node;
 
 import java.awt.Color;
 

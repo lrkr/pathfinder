@@ -1,5 +1,9 @@
-package fi.lrkr.pathfinder;
+package fi.lrkr.pathfinder.pathfinder;
 
+import fi.lrkr.pathfinder.maze.Maze;
+import fi.lrkr.pathfinder.pathfinder.BreadthFirst;
+import fi.lrkr.pathfinder.node.Location;
+import fi.lrkr.pathfinder.node.Step;
 import fi.lrkr.pathfinder.util.List;
 import fi.lrkr.pathfinder.util.Queue;
 import org.junit.After;

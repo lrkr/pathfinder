@@ -22,8 +22,7 @@ public class List<T> {
         if (current >= list.length) {
             doubleSize();
         }
-        list[current] = t;
-        current++;
+        list[current++] = t;
     }
 
     private void doubleSize() {
@@ -39,6 +38,15 @@ public class List<T> {
             throw new ArrayIndexOutOfBoundsException();
         }
         return (T) list[index];
+    }
+    
+    public boolean contains(Object t) {
+        for (int i = 0; i < current; i++) {
+            if (list[i].equals(t)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

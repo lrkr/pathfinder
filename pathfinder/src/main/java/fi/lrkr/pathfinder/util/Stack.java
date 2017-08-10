@@ -26,8 +26,7 @@ public class Stack<T> {
         if (current >= stack.length) {
             doubleSize();
         }
-        stack[current] = t;
-        current++;
+        stack[current++] = t;
     }
 
     public T pop() {

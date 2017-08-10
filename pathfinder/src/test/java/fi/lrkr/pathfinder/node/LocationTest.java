@@ -1,5 +1,6 @@
-package fi.lrkr.pathfinder;
+package fi.lrkr.pathfinder.node;
 
+import fi.lrkr.pathfinder.node.Location;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -46,7 +47,7 @@ public class LocationTest {
     public void testEquals3() {
         Location l1 = new Location(4, 2);
         Location l2 = new Location(4, 2);
-        l1.setPrev(l2);
+        l1.setPrevious(l2);
         assertTrue(l1.equals(l2));
     }
 

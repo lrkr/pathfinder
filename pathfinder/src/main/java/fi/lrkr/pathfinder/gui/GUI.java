@@ -1,7 +1,7 @@
 package fi.lrkr.pathfinder.gui;
 
-import fi.lrkr.pathfinder.Maze;
-import fi.lrkr.pathfinder.Step;
+import fi.lrkr.pathfinder.maze.Maze;
+import fi.lrkr.pathfinder.node.Step;
 import fi.lrkr.pathfinder.util.Queue;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -46,6 +46,11 @@ public class GUI implements Runnable {
         contentPane.add(mazePane);
     }
 
+    /**
+     * Visualizes the Pathfinder's checked nodes and final route.
+     * 
+     * @param steps Queue of Step objects
+     */
     public void playback(Queue<Step> steps) {
         Long time = System.currentTimeMillis();
         while (!steps.isEmpty()) {

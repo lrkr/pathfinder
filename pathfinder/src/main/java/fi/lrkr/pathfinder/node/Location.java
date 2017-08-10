@@ -1,14 +1,14 @@
-package fi.lrkr.pathfinder;
+package fi.lrkr.pathfinder.node;
 
 /**
  * Class provides a representation of location in coordinate space with x, y
  * coordinates.
  */
-public class Location {
+public class Location implements Vertex {
 
     private int x;
     private int y;
-    private Location prev;
+    private Location previous;
 
     /**
      * Constructor for creating Location object with x and y coordinates
@@ -19,7 +19,7 @@ public class Location {
     public Location(int x, int y) {
         this.x = x;
         this.y = y;
-        this.prev = null;
+        this.previous = null;
     }
 
     /**
@@ -47,8 +47,8 @@ public class Location {
      *
      * @param l
      */
-    public void setPrev(Location l) {
-        this.prev = l;
+    public void setPrevious(Location l) {
+        this.previous = l;
     }
 
     /**
@@ -56,11 +56,18 @@ public class Location {
      * @return Previous location before this one. As in from which location it
      * is the shortest path to this one.
      */
-    public Location getPrev() {
-        return this.prev;
+    public Location getPrevious() {
+        return this.previous;
     }
 
-    public int Manhattan(Location l1) {
+    /**
+     * Calculates the Manhattan distance between this Location and parameter
+     * Location.
+     *
+     * @param l1 Location to which distance is calculated
+     * @return Manhattan distance
+     */
+    public int manhattan(Location l1) {
         return Math.abs(this.x - l1.x) + Math.abs(this.y - l1.y);
     }
 
@@ -84,5 +91,10 @@ public class Location {
         hash = 71 * hash + this.x;
         hash = 71 * hash + this.y;
         return hash;
+    }
+
+    @Override
+    public Location getLocation() {
+        return this;
     }
 }

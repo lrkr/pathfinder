@@ -1,5 +1,8 @@
-package fi.lrkr.pathfinder;
+package fi.lrkr.pathfinder.pathfinder;
 
+import fi.lrkr.pathfinder.maze.Maze;
+import fi.lrkr.pathfinder.node.Location;
+import fi.lrkr.pathfinder.node.Step;
 import fi.lrkr.pathfinder.util.List;
 import fi.lrkr.pathfinder.util.Queue;
 import java.awt.Color;
@@ -29,7 +32,7 @@ public class BreadthFirst extends Pathfinder {
             Location current = queue.removeFirst();
             if (checkWin(current)) {
                 createPath(current);
-                return steps;
+                break;
             }
             List<Location> adj = getAdjacent(current);
             for (int i = 0; i < adj.length(); i++) {
@@ -37,12 +40,11 @@ public class BreadthFirst extends Pathfinder {
                 if (visited[location.getY()][location.getX()] == 0) {
                     steps.add(new Step(location, Color.blue));
                     visited[location.getY()][location.getX()] = 1;
-                    location.setPrev(current);
+                    location.setPrevious(current);
                     queue.add(location);
                 }
             }
         }
-        System.out.println("No path found");
         return steps;
     }
 }

@@ -1,5 +1,9 @@
-package fi.lrkr.pathfinder;
+package fi.lrkr.pathfinder.pathfinder;
 
+import fi.lrkr.pathfinder.maze.Maze;
+import fi.lrkr.pathfinder.node.Location;
+import fi.lrkr.pathfinder.node.Vertex;
+import fi.lrkr.pathfinder.node.Step;
 import fi.lrkr.pathfinder.util.List;
 import fi.lrkr.pathfinder.util.Queue;
 import fi.lrkr.pathfinder.util.Stack;
@@ -42,14 +46,14 @@ abstract public class Pathfinder {
      * @param l Pathfinder's last Location which is the Maze's end Location if
      * Pathfinder was successful.
      */
-    protected void createPath(Location l) {
-        Stack<Location> path = new Stack<>();
+    protected void createPath(Vertex l) {
+        Stack<Vertex> path = new Stack<>();
         while (l != null) {
             path.push(l);
-            l = l.getPrev();
+            l = l.getPrevious();
         }
         while (!path.isEmpty()) {
-            steps.add(new Step(path.pop(), Color.red));
+            steps.add(new Step(path.pop().getLocation(), Color.red));
         }
     }
 
