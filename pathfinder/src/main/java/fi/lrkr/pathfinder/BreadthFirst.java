@@ -1,16 +1,15 @@
 package fi.lrkr.pathfinder;
 
+import fi.lrkr.pathfinder.util.List;
+import fi.lrkr.pathfinder.util.Queue;
 import java.awt.Color;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.List;
 
 /**
- * Class implements breath first search.s
+ * Class implements breath first search.
  */
 public class BreadthFirst extends Pathfinder {
 
-    private ArrayDeque<Location> queue;
+    private Queue<Location> queue;
 
     /**
      * Constructor for creating BreathFirst search objects.
@@ -19,21 +18,22 @@ public class BreadthFirst extends Pathfinder {
      */
     public BreadthFirst(Maze maze) {
         super(maze);
-        this.queue = new ArrayDeque<>();
+        this.queue = new Queue<>();
         this.queue.add(maze.getStart());
         steps.add(new Step(maze.getStart(), Color.blue));
     }
 
     @Override
-    public Deque<Step> solve() {
+    public Queue<Step> solve() {
         while (!queue.isEmpty()) {
-            Location current = queue.pop();
+            Location current = queue.removeFirst();
             if (checkWin(current)) {
                 createPath(current);
                 return steps;
             }
             List<Location> adj = getAdjacent(current);
-            for (Location location : adj) {
+            for (int i = 0; i < adj.length(); i++) {
+                Location location = adj.get(i);
                 if (visited[location.getY()][location.getX()] == 0) {
                     steps.add(new Step(location, Color.blue));
                     visited[location.getY()][location.getX()] = 1;

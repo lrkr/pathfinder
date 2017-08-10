@@ -1,5 +1,8 @@
-package fi.lrkr.pathfinder;
+package fi.lrkr.pathfinder.gui;
 
+import fi.lrkr.pathfinder.Maze;
+import fi.lrkr.pathfinder.Step;
+import fi.lrkr.pathfinder.util.Queue;
 import java.awt.Container;
 import java.awt.Dimension;
 import javax.swing.JFrame;
@@ -43,12 +46,14 @@ public class GUI implements Runnable {
         contentPane.add(mazePane);
     }
 
-    /**
-     * Paints a square with a color
-     *
-     * @param s Step object which associates a color to a Location.
-     */
-    public void paintCell(Step s) {
-        mazePane.paintCell(s);
+    public void playback(Queue<Step> steps) {
+        Long time = System.currentTimeMillis();
+        while (!steps.isEmpty()) {
+            if (System.currentTimeMillis() > time + 20) {
+                Step current = steps.removeFirst();
+                mazePane.paintCell(current);
+                time = System.currentTimeMillis();
+            }
+        }
     }
 }

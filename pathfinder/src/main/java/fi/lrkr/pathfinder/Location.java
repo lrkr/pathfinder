@@ -60,6 +60,10 @@ public class Location {
         return this.prev;
     }
 
+    public int Manhattan(Location l1) {
+        return Math.abs(this.x - l1.x) + Math.abs(this.y - l1.y);
+    }
+
     @Override
     public String toString() {
         return "x: " + this.x + "      y: " + this.y;

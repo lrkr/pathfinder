@@ -1,22 +1,19 @@
 package fi.lrkr.pathfinder;
 
+import fi.lrkr.pathfinder.util.List;
+import fi.lrkr.pathfinder.util.Queue;
+import fi.lrkr.pathfinder.util.Stack;
 import java.awt.Color;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
-import java.util.Stack;
 
 /**
  * Abstract class for Pathfinding algorithms. Provides useful methods that are
  * needed for different Pathfinder implementations.
- *
  */
 abstract public class Pathfinder {
 
     protected Maze maze;
     protected int[][] visited;
-    protected Deque<Step> steps;
+    protected Queue<Step> steps;
 
     /**
      * Constructor for creating Pathfinder objects.
@@ -24,7 +21,7 @@ abstract public class Pathfinder {
      * @param maze Maze on which the Pathfinder is used
      */
     public Pathfinder(Maze maze) {
-        this.steps = new ArrayDeque<>();
+        this.steps = new Queue<>();
         this.maze = maze;
         this.visited = new int[maze.getHeight()][maze.getWidth()];
         visited[maze.getStart().getY()][maze.getStart().getX()] = 1;
@@ -36,7 +33,7 @@ abstract public class Pathfinder {
      *
      * @return Queue of Step objects used for visualization
      */
-    abstract public Deque<Step> solve();
+    abstract public Queue<Step> solve();
 
     /**
      * After Pathfinder has reached the end this method backtracks to the start
@@ -73,7 +70,7 @@ abstract public class Pathfinder {
      * @return List of valid adjacent Locations
      */
     protected List<Location> getAdjacent(Location l) {
-        ArrayList<Location> adj = new ArrayList<>();
+        List<Location> adj = new List<>();
         Location up = new Location(l.getX(), l.getY() - 1);
         Location down = new Location(l.getX(), l.getY() + 1);
         Location left = new Location(l.getX() - 1, l.getY());
@@ -94,7 +91,8 @@ abstract public class Pathfinder {
     }
 
     /**
-     * Checks the validity of a location. Location needs to be within the Maze.
+     * Checks the validity of a location. Location needs to be within the Maze
+     * and the value at the Location must be 0.
      *
      * @param l Location to be checked
      * @return Boolean value for Locations validity

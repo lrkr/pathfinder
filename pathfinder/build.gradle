@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'checkstyle'
+apply plugin: 'jacoco'
 sourceCompatibility = '1.8'
 
 mainClassName = 'fi.lrkr.pathfinder.Main'
@@ -15,4 +16,12 @@ dependencies {
 
 run {
     standardInput = System.in
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/jacocoHtml"
+    }
 }

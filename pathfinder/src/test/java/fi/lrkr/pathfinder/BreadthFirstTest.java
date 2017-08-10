@@ -1,7 +1,7 @@
 package fi.lrkr.pathfinder;
 
-import java.util.Deque;
-import java.util.List;
+import fi.lrkr.pathfinder.util.List;
+import fi.lrkr.pathfinder.util.Queue;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -43,19 +43,26 @@ public class BreadthFirstTest {
 
     @Test
     public void testSolve() {
-        Deque<Step> steps = testBFS.solve();
+        Queue<Step> steps = testBFS.solve();
         assertNotNull(steps);
         //16 looked cell steps + 14 path steps
-        assertEquals(30, steps.size());
-        assertEquals(testMaze.getStart(), steps.getFirst().getLocation());
-        assertEquals(testMaze.getEnd(), steps.getLast().getLocation());
+        assertEquals(30, steps.lenght());
+        assertEquals(testMaze.getStart(), steps.removeFirst().getLocation());
+        assertEquals(testMaze.getEnd(), steps.removeLast().getLocation());
+    }
+    
+    @Test
+    public void testSolve2() {
+        testMaze.getMaze()[1][1] = 1;
+        Queue<Step> steps = testBFS.solve();
+        assertEquals(1, steps.lenght());
     }
 
     @Test
     public void testGetAdjacent() {
         Location testLocation = new Location(3, 1);
         List<Location> adj = testBFS.getAdjacent(testLocation);
-        assertEquals(2, adj.size());
+        assertEquals(2, adj.length());
         assertEquals(new Location(3, 2), adj.get(0));
         assertEquals(new Location(4, 1), adj.get(1));
     }
@@ -63,6 +70,6 @@ public class BreadthFirstTest {
     public void testGetAdjacent2() {
         Location testLocation = new Location(52, 1234);
         List<Location> adj = testBFS.getAdjacent(testLocation);
-        assertEquals(0, adj.size());
+        assertEquals(0, adj.length());
     }
 }
