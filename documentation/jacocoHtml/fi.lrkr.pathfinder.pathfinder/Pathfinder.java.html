@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Pathfinder.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pathfinder</a> &gt; <a href="index.source.html" class="el_package">fi.lrkr.pathfinder.pathfinder</a> &gt; <span class="el_source">Pathfinder.java</span></div><h1>Pathfinder.java</h1><pre class="source lang-java linenums">package fi.lrkr.pathfinder.pathfinder;
+
+import fi.lrkr.pathfinder.maze.Maze;
+import fi.lrkr.pathfinder.vertex.Location;
+import fi.lrkr.pathfinder.vertex.Vertex;
+import fi.lrkr.pathfinder.vertex.Step;
+import fi.lrkr.pathfinder.util.List;
+import fi.lrkr.pathfinder.util.Queue;
+import fi.lrkr.pathfinder.util.Stack;
+import java.awt.Color;
+
+/**
+ * Abstract class for Pathfinding algorithms. Provides useful methods that are
+ * needed for different Pathfinder implementations.
+ */
+abstract public class Pathfinder {
+
+    protected Maze maze;
+    protected int[][] visited;
+    protected Queue&lt;Step&gt; steps;
+
+    /**
+     * Constructor for creating Pathfinder objects.
+     *
+     * @param maze Maze on which the Pathfinder is used
+     */
+<span class="fc" id="L27">    public Pathfinder(Maze maze) {</span>
+<span class="fc" id="L28">        this.steps = new Queue&lt;&gt;();</span>
+<span class="fc" id="L29">        this.maze = maze;</span>
+<span class="fc" id="L30">        this.visited = new int[maze.getHeight()][maze.getWidth()];</span>
+<span class="fc" id="L31">        visited[maze.getStart().getY()][maze.getStart().getX()] = 1;</span>
+<span class="fc" id="L32">    }</span>
+
+    /**
+     * Abstract method for solving the Maze. Each implementation uses its own
+     * solve method.
+     *
+     * @return Queue of Step objects used for visualization
+     */
+    abstract public Queue&lt;Step&gt; solve();
+
+    /**
+     * After Pathfinder has reached the end this method backtracks to the start
+     * to create the route.
+     *
+     * @param l Pathfinder's last Vertex which is the Maze's end Location if
+     * Pathfinder was successful.
+     */
+    protected void createPath(Vertex l) {
+<span class="fc" id="L50">        Stack&lt;Vertex&gt; path = new Stack&lt;&gt;();</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        while (l != null) {</span>
+<span class="fc" id="L52">            path.push(l);</span>
+<span class="fc" id="L53">            l = l.getPrevious();</span>
+        }
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        while (!path.isEmpty()) {</span>
+<span class="fc" id="L56">            steps.add(new Step(path.pop().getLocation(), Color.red));</span>
+        }
+<span class="fc" id="L58">    }</span>
+
+    /**
+     * Checks if the current location is the Maze's end location.
+     *
+     * @param l Location to be checked
+     * @return Boolean value signifying if the pathfinder is at the end or not
+     */
+    protected boolean checkWin(Location l) {
+<span class="fc" id="L67">        return maze.getEnd().equals(l);</span>
+    }
+
+    /**
+     * Creates a list of valid Locations adjacent to a Location.
+     *
+     * @param l Location from which adjacents are checked
+     * @return List of valid adjacent Locations
+     */
+    protected List&lt;Location&gt; getAdjacent(Location l) {
+<span class="fc" id="L77">        List&lt;Location&gt; adj = new List&lt;&gt;();</span>
+<span class="fc" id="L78">        Location up = new Location(l.getX(), l.getY() - 1);</span>
+<span class="fc" id="L79">        Location down = new Location(l.getX(), l.getY() + 1);</span>
+<span class="fc" id="L80">        Location left = new Location(l.getX() - 1, l.getY());</span>
+<span class="fc" id="L81">        Location right = new Location(l.getX() + 1, l.getY());</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (isValid(up)) {</span>
+<span class="fc" id="L83">            adj.add(up);</span>
+        }
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if (isValid(down)) {</span>
+<span class="fc" id="L86">            adj.add(down);</span>
+        }
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        if (isValid(left)) {</span>
+<span class="fc" id="L89">            adj.add(left);</span>
+        }
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (isValid(right)) {</span>
+<span class="fc" id="L92">            adj.add(right);</span>
+        }
+<span class="fc" id="L94">        return adj;</span>
+    }
+
+    /**
+     * Checks the validity of a location. Location needs to be within the Maze
+     * and the value at the Location must be 0.
+     *
+     * @param l Location to be checked
+     * @return Boolean value for Locations validity
+     */
+    private boolean isValid(Location l) {
+<span class="fc" id="L105">        int x = l.getX();</span>
+<span class="fc" id="L106">        int y = l.getY();</span>
+<span class="pc bpc" id="L107" title="3 of 8 branches missed.">        if (x &lt; 0 || y &lt; 0 || x &gt;= maze.getMaze()[0].length || y &gt;= maze.getMaze().length) {</span>
+<span class="fc" id="L108">            return false;</span>
+        }
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (maze.getMaze()[y][x] != 0) {</span>
+<span class="fc" id="L111">            return false;</span>
+        }
+<span class="fc" id="L113">        return true;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

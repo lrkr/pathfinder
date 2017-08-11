@@ -1,7 +1,7 @@
 package fi.lrkr.pathfinder.gui;
 
 import fi.lrkr.pathfinder.maze.Maze;
-import fi.lrkr.pathfinder.node.Step;
+import fi.lrkr.pathfinder.vertex.Step;
 import fi.lrkr.pathfinder.util.Queue;
 import java.awt.Container;
 import java.awt.Dimension;

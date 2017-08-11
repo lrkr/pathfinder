@@ -1,9 +1,9 @@
 package fi.lrkr.pathfinder.pathfinder;
 
 import fi.lrkr.pathfinder.maze.Maze;
-import fi.lrkr.pathfinder.node.Location;
-import fi.lrkr.pathfinder.node.Vertex;
-import fi.lrkr.pathfinder.node.Step;
+import fi.lrkr.pathfinder.vertex.Location;
+import fi.lrkr.pathfinder.vertex.Vertex;
+import fi.lrkr.pathfinder.vertex.Step;
 import fi.lrkr.pathfinder.util.List;
 import fi.lrkr.pathfinder.util.Queue;
 import fi.lrkr.pathfinder.util.Stack;
@@ -43,7 +43,7 @@ abstract public class Pathfinder {
      * After Pathfinder has reached the end this method backtracks to the start
      * to create the route.
      *
-     * @param l Pathfinder's last Location which is the Maze's end Location if
+     * @param l Pathfinder's last Vertex which is the Maze's end Location if
      * Pathfinder was successful.
      */
     protected void createPath(Vertex l) {

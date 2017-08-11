@@ -1,6 +1,5 @@
-package fi.lrkr.pathfinder.node;
+package fi.lrkr.pathfinder.vertex;
 
-import fi.lrkr.pathfinder.node.Location;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -49,6 +48,20 @@ public class LocationTest {
         Location l2 = new Location(4, 2);
         l1.setPrevious(l2);
         assertTrue(l1.equals(l2));
+    }
+    
+    @Test
+    public void testEquals4() {
+        Location l1 = new Location(4, 2);
+        String s = "moi";
+        assertFalse(l1.equals(s));
+    }
+    
+    @Test
+    public void testHashCode() {
+        Location l1 = new Location(4, 2);
+        Location l2 = new Location(4, 2);
+        assertEquals(l1.hashCode(), l2.hashCode());
     }
 
 }

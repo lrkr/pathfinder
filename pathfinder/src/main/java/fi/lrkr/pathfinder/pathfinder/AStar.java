@@ -1,9 +1,9 @@
 package fi.lrkr.pathfinder.pathfinder;
 
 import fi.lrkr.pathfinder.maze.Maze;
-import fi.lrkr.pathfinder.node.Location;
-import fi.lrkr.pathfinder.node.Step;
-import fi.lrkr.pathfinder.node.Node;
+import fi.lrkr.pathfinder.vertex.Location;
+import fi.lrkr.pathfinder.vertex.Step;
+import fi.lrkr.pathfinder.vertex.Node;
 import fi.lrkr.pathfinder.util.List;
 import fi.lrkr.pathfinder.util.Queue;
 import java.awt.Color;

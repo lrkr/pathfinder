@@ -34,8 +34,8 @@ public class List<T> {
     }
 
     public T get(int index) {
-        if (index < 0 || index > current) {
-            throw new ArrayIndexOutOfBoundsException();
+        if (index < 0 || index >= current) {
+            throw new IndexOutOfBoundsException();
         }
         return (T) list[index];
     }

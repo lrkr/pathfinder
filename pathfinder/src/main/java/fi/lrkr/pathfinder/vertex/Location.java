@@ -1,4 +1,4 @@
-package fi.lrkr.pathfinder.node;
+package fi.lrkr.pathfinder.vertex;
 
 /**
  * Class provides a representation of location in coordinate space with x, y
@@ -51,11 +51,7 @@ public class Location implements Vertex {
         this.previous = l;
     }
 
-    /**
-     *
-     * @return Previous location before this one. As in from which location it
-     * is the shortest path to this one.
-     */
+    @Override
     public Location getPrevious() {
         return this.previous;
     }
@@ -69,11 +65,6 @@ public class Location implements Vertex {
      */
     public int manhattan(Location l1) {
         return Math.abs(this.x - l1.x) + Math.abs(this.y - l1.y);
-    }
-
-    @Override
-    public String toString() {
-        return "x: " + this.x + "      y: " + this.y;
     }
 
     @Override

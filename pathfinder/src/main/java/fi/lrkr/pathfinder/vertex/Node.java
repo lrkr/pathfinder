@@ -1,58 +1,65 @@
-package fi.lrkr.pathfinder.node;
+package fi.lrkr.pathfinder.vertex;
 
-import java.util.Objects;
-
+/**
+ * Class provides representation of a node in a Maze (or any graph). It has a
+ * Location for Maze coordinates, length from the start and heuristic score to
+ * the end.
+ */
 public class Node implements Comparable<Node>, Vertex {
 
     private Location location;
-    private int weight;
+    private int heuristicScore;
     private int length;
     private Node previous;
 
-    public Node(Location location) {
+    /**
+     * Constructor for creating Node objects.
+     *
+     * @param location Location in the Maze
+     * @param heuristicScore Heuristic score to the end
+     */
+    public Node(Location location, int heuristicScore) {
         this.location = location;
+        this.heuristicScore = heuristicScore;
     }
 
-    public Node(Location location, int weight) {
-        this.location = location;
-        this.weight = weight;
-    }
-
+    @Override
     public Node getPrevious() {
         return previous;
     }
 
+    /**
+     *
+     * @param previous Node
+     */
     public void setPrevious(Node previous) {
         this.previous = previous;
     }
 
+    @Override
     public Location getLocation() {
         return location;
     }
 
+    /**
+     *
+     * @return length from the start
+     */
     public int getLength() {
         return length;
     }
 
+    /**
+     *
+     * @param length from the start
+     */
     public void setLength(int length) {
         this.length = length;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
     @Override
     public int compareTo(Node t) {
-        return (weight + length) - (t.weight + t.length);
+        return (heuristicScore + length) - (t.heuristicScore + t.length);
     }
 
     @Override
@@ -67,7 +74,7 @@ public class Node implements Comparable<Node>, Vertex {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.location);
+        hash = 89 * hash + this.location.hashCode();
         return hash;
     }
 }

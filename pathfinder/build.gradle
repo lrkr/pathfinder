@@ -24,4 +24,9 @@ jacocoTestReport {
         csv.enabled false
         html.destination "${buildDir}/jacocoHtml"
     }
+	afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: 'fi/lrkr/pathfinder/gui')
+        })
+    }
 }
