@@ -7,7 +7,6 @@ public class List<T> {
     private Object[] list;
     private int current;
     private int defaultSize = 1;
-    private int maxSize = 999999999;
 
     public List() {
         this.current = 0;
@@ -27,9 +26,6 @@ public class List<T> {
 
     private void doubleSize() {
         int doubledSize = list.length * 2;
-        if (doubledSize > maxSize) {
-            doubledSize = maxSize;
-        }
         list = Arrays.copyOf(list, doubledSize);
     }
 
@@ -39,7 +35,7 @@ public class List<T> {
         }
         return (T) list[index];
     }
-    
+
     public boolean contains(Object t) {
         for (int i = 0; i < current; i++) {
             if (list[i].equals(t)) {

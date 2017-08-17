@@ -7,7 +7,6 @@ public class Stack<T> {
     private Object[] stack;
     private int current;
     private int defaultSize = 10;
-    private int maxSize = 999999999;
 
     public Stack() {
         this.current = 0;
@@ -37,9 +36,6 @@ public class Stack<T> {
 
     private void doubleSize() {
         int doubledSize = stack.length * 2;
-        if (doubledSize > maxSize) {
-            doubledSize = maxSize;
-        }
         stack = Arrays.copyOf(stack, doubledSize);
     }
 }

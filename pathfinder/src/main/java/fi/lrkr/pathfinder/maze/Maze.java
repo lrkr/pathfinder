@@ -14,6 +14,7 @@ public class Maze {
     private int height;
     private int width;
     private int[][] maze;
+    private String name;
 
     /**
      * Constructor for creating Maze objects.
@@ -21,39 +22,15 @@ public class Maze {
      * @param start Maze's start location
      * @param end Maze's end location
      * @param maze Maze's 2d int array representation
+     * @param name Maze's name
      */
-    public Maze(Location start, Location end, int[][] maze) {
+    public Maze(Location start, Location end, int[][] maze, String name) {
         this.start = start;
         this.end = end;
         this.maze = maze;
         this.height = maze.length;
         this.width = maze[0].length;
-    }
-
-    /**
-     * Constructor for creating simple maze used for testing.
-     */
-    public Maze() {
-        this.start = new Location(4, 0);
-        this.end = new Location(15, 14);
-        this.maze = new int[][]{
-            {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1},
-            {1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1},
-            {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
-            {1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1},
-            {1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1},
-            {1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1}};
-        this.height = this.maze.length;
-        this.width = this.maze[0].length;
+        this.name = name;
     }
 
     /**
@@ -96,4 +73,8 @@ public class Maze {
         return maze;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }

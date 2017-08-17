@@ -46,25 +46,15 @@ public class MazePane extends JPanel {
                 l.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 l.setOpaque(true);
                 labelMap[y][x] = l;
+                if (maze.getMaze()[y][x] == 0) {
+                    l.setBackground(Color.WHITE);
+                } else {
+                    l.setBackground(Color.BLACK);
+                }
                 boardPane.add(l);
             }
         }
         this.add(boardPane);
-    }
-
-    @Override
-    public void paintComponent(Graphics g) {
-        int[][] m = maze.getMaze();
-        super.paintComponent(g);
-        for (int y = 0; y < maze.getHeight(); y++) {
-            for (int x = 0; x < maze.getWidth(); x++) {
-                if (m[y][x] == 0) {
-                    labelMap[y][x].setBackground(Color.WHITE);
-                } else if (m[y][x] == 1) {
-                    labelMap[y][x].setBackground(Color.BLACK);
-                }
-            }
-        }
     }
 
     /**
@@ -75,4 +65,5 @@ public class MazePane extends JPanel {
     public void paintCell(Step s) {
         labelMap[s.getLocation().getY()][s.getLocation().getX()].setBackground(s.getColor());
     }
+
 }

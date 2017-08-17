@@ -8,7 +8,6 @@ public class Queue<T> {
     private int end;
     private Object[] queue;
     private int defaultSize = 10;
-    private int maxSize = 999999999;
 
     public Queue() {
         this.start = 0;
@@ -41,9 +40,6 @@ public class Queue<T> {
 
     private void doubleSize() {
         int doubledSize = queue.length * 2;
-        if (doubledSize > maxSize) {
-            doubledSize = maxSize;
-        }
         queue = Arrays.copyOf(queue, doubledSize);
     }
 

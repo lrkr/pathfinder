@@ -35,7 +35,7 @@ public class AStarTest {
             {1, 0, 1, 0, 1, 0, 0, 1},
             {1, 0, 0, 0, 0, 1, 0, 0},
             {1, 1, 1, 1, 1, 1, 1, 1}};
-        this.testMaze = new Maze(new Location(1, 0), new Location(7, 3), mazeArray);
+        this.testMaze = new Maze(new Location(1, 0), new Location(7, 3), mazeArray, "testMaze");
         this.testAStar = new AStar(testMaze);
     }
 
