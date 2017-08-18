@@ -6,14 +6,27 @@ import fi.lrkr.pathfinder.vertex.Location;
 import java.io.File;
 import java.util.Scanner;
 
+/**
+ * Class provides functionality for reading and parsing Maze objects from a
+ * file.
+ */
 public class MazeReader {
 
     private List<Maze> mazes;
 
+    /**
+     * Constructor for creating MazeReader object.
+     */
     public MazeReader() {
         this.mazes = new List<>();
     }
 
+    /**
+     * Reads .txt files containing Maze representations and creates Maze objects
+     * from them.
+     *
+     * @return List of read Maze objects
+     */
     public List<Maze> readMazes() {
         File folder = new File(System.getProperty("user.dir") + "/mazes/");
         File[] mazeList = folder.listFiles();
@@ -45,7 +58,7 @@ public class MazeReader {
             Location end = getStartOrEnd(mazeArray, start);
             mazes.add(new Maze(start, end, mazeArray, file.getName()));
         } catch (Exception e) {
-
+            throw new RuntimeException(e);
         }
     }
 

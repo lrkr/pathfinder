@@ -33,7 +33,7 @@ public class Queue<T> {
     public T removeFirst() {
         return (T) queue[start++];
     }
-    
+
     public T removeLast() {
         return (T) queue[--end];
     }

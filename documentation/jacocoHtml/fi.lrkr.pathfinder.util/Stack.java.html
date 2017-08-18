@@ -7,40 +7,36 @@ public class Stack&lt;T&gt; {
     private Object[] stack;
     private int current;
 <span class="fc" id="L9">    private int defaultSize = 10;</span>
-<span class="fc" id="L10">    private int maxSize = 999999999;</span>
 
-<span class="fc" id="L12">    public Stack() {</span>
-<span class="fc" id="L13">        this.current = 0;</span>
-<span class="fc" id="L14">        this.stack = new Object[defaultSize];</span>
-<span class="fc" id="L15">    }</span>
+<span class="fc" id="L11">    public Stack() {</span>
+<span class="fc" id="L12">        this.current = 0;</span>
+<span class="fc" id="L13">        this.stack = new Object[defaultSize];</span>
+<span class="fc" id="L14">    }</span>
 
     public int size() {
-<span class="fc" id="L18">        return this.current;</span>
+<span class="fc" id="L17">        return this.current;</span>
     }
 
     public boolean isEmpty() {
-<span class="fc bfc" id="L22" title="All 2 branches covered.">        return current == 0;</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        return current == 0;</span>
     }
 
     public void push(Object t) {
-<span class="fc bfc" id="L26" title="All 2 branches covered.">        if (current &gt;= stack.length) {</span>
-<span class="fc" id="L27">            doubleSize();</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if (current &gt;= stack.length) {</span>
+<span class="fc" id="L26">            doubleSize();</span>
         }
-<span class="fc" id="L29">        stack[current++] = t;</span>
-<span class="fc" id="L30">    }</span>
+<span class="fc" id="L28">        stack[current++] = t;</span>
+<span class="fc" id="L29">    }</span>
 
     public T pop() {
-<span class="fc" id="L33">        Object ret = stack[--current];</span>
-<span class="fc" id="L34">        stack[current] = null;</span>
-<span class="fc" id="L35">        return (T) ret;</span>
+<span class="fc" id="L32">        Object ret = stack[--current];</span>
+<span class="fc" id="L33">        stack[current] = null;</span>
+<span class="fc" id="L34">        return (T) ret;</span>
     }
 
     private void doubleSize() {
-<span class="fc" id="L39">        int doubledSize = stack.length * 2;</span>
-<span class="pc bpc" id="L40" title="1 of 2 branches missed.">        if (doubledSize &gt; maxSize) {</span>
-<span class="nc" id="L41">            doubledSize = maxSize;</span>
-        }
-<span class="fc" id="L43">        stack = Arrays.copyOf(stack, doubledSize);</span>
-<span class="fc" id="L44">    }</span>
+<span class="fc" id="L38">        int doubledSize = stack.length * 2;</span>
+<span class="fc" id="L39">        stack = Arrays.copyOf(stack, doubledSize);</span>
+<span class="fc" id="L40">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

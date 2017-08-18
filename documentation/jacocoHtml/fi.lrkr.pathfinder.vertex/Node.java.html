@@ -21,11 +21,12 @@ public class Node implements Comparable&lt;Node&gt;, Vertex {
 <span class="fc" id="L21">    public Node(Location location, int heuristicScore) {</span>
 <span class="fc" id="L22">        this.location = location;</span>
 <span class="fc" id="L23">        this.heuristicScore = heuristicScore;</span>
-<span class="fc" id="L24">    }</span>
+<span class="fc" id="L24">        this.length = Integer.MAX_VALUE;</span>
+<span class="fc" id="L25">    }</span>
 
     @Override
     public Node getPrevious() {
-<span class="fc" id="L28">        return previous;</span>
+<span class="fc" id="L29">        return previous;</span>
     }
 
     /**
@@ -33,12 +34,12 @@ public class Node implements Comparable&lt;Node&gt;, Vertex {
      * @param previous Node
      */
     public void setPrevious(Node previous) {
-<span class="fc" id="L36">        this.previous = previous;</span>
-<span class="fc" id="L37">    }</span>
+<span class="fc" id="L37">        this.previous = previous;</span>
+<span class="fc" id="L38">    }</span>
 
     @Override
     public Location getLocation() {
-<span class="fc" id="L41">        return location;</span>
+<span class="fc" id="L42">        return location;</span>
     }
 
     /**
@@ -46,7 +47,7 @@ public class Node implements Comparable&lt;Node&gt;, Vertex {
      * @return length from the start
      */
     public int getLength() {
-<span class="fc" id="L49">        return length;</span>
+<span class="fc" id="L50">        return length;</span>
     }
 
     /**
@@ -54,28 +55,32 @@ public class Node implements Comparable&lt;Node&gt;, Vertex {
      * @param length from the start
      */
     public void setLength(int length) {
-<span class="fc" id="L57">        this.length = length;</span>
-<span class="fc" id="L58">    }</span>
+<span class="fc" id="L58">        this.length = length;</span>
+<span class="fc" id="L59">    }</span>
 
     @Override
     public int compareTo(Node t) {
-<span class="fc" id="L62">        return (heuristicScore + length) - (t.heuristicScore + t.length);</span>
+<span class="fc" id="L63">        return (heuristicScore + length) - (t.heuristicScore + t.length);</span>
+    }
+
+    public int getHeuristic() {
+<span class="fc" id="L67">        return heuristicScore + length;</span>
     }
 
     @Override
     public boolean equals(Object obj) {
-<span class="pc bpc" id="L67" title="1 of 4 branches missed.">        if (obj == null || obj.getClass() != Node.class) {</span>
-<span class="fc" id="L68">            return false;</span>
+<span class="pc bpc" id="L72" title="1 of 4 branches missed.">        if (obj == null || obj.getClass() != Node.class) {</span>
+<span class="fc" id="L73">            return false;</span>
         }
-<span class="fc" id="L70">        Node n = (Node) obj;</span>
-<span class="fc" id="L71">        return this.location.equals(n.location);</span>
+<span class="fc" id="L75">        Node n = (Node) obj;</span>
+<span class="fc" id="L76">        return this.location.equals(n.location);</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L76">        int hash = 7;</span>
-<span class="fc" id="L77">        hash = 89 * hash + this.location.hashCode();</span>
-<span class="fc" id="L78">        return hash;</span>
+<span class="fc" id="L81">        int hash = 7;</span>
+<span class="fc" id="L82">        hash = 89 * hash + this.location.hashCode();</span>
+<span class="fc" id="L83">        return hash;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

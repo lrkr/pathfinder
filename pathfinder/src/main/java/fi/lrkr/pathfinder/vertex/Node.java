@@ -21,6 +21,7 @@ public class Node implements Comparable<Node>, Vertex {
     public Node(Location location, int heuristicScore) {
         this.location = location;
         this.heuristicScore = heuristicScore;
+        this.length = Integer.MAX_VALUE;
     }
 
     @Override
@@ -60,6 +61,10 @@ public class Node implements Comparable<Node>, Vertex {
     @Override
     public int compareTo(Node t) {
         return (heuristicScore + length) - (t.heuristicScore + t.length);
+    }
+
+    public int getHeuristic() {
+        return heuristicScore + length;
     }
 
     @Override

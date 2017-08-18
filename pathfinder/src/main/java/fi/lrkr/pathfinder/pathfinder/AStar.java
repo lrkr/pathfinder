@@ -5,16 +5,16 @@ import fi.lrkr.pathfinder.vertex.Location;
 import fi.lrkr.pathfinder.vertex.Step;
 import fi.lrkr.pathfinder.vertex.Node;
 import fi.lrkr.pathfinder.util.List;
+import fi.lrkr.pathfinder.util.NodeHeap;
 import fi.lrkr.pathfinder.util.Queue;
 import java.awt.Color;
-import java.util.PriorityQueue;
 
 /**
  * Class implements A* search.
  */
 public class AStar extends Pathfinder {
 
-    private PriorityQueue<Node> queue;
+    private NodeHeap heap;
     private List<Location> done;
     private Node[][] nodes;
 
@@ -25,7 +25,7 @@ public class AStar extends Pathfinder {
      */
     public AStar(Maze maze) {
         super(maze);
-        this.queue = new PriorityQueue<>();
+        this.heap = new NodeHeap();
         this.done = new List<>();
         nodes = new Node[maze.getHeight()][maze.getWidth()];
     }
@@ -34,25 +34,25 @@ public class AStar extends Pathfinder {
     public Queue<Step> solve() {
         Node start = getNode(maze.getStart());
         start.setLength(0);
-        queue.add(start);
-        steps.add(new Step(start.getLocation(), Color.BLUE));
-        while (!queue.isEmpty()) {
-            Node current = queue.poll();
+        heap.add(start);
+        while (!heap.isEmpty()) {
+            Node current = heap.poll();
+            steps.add(new Step(current.getLocation(), Color.BLUE));
+            done.add(current);
             if (checkWin(current.getLocation())) {
                 createPath(current);
                 break;
             }
             List<Location> adj = getAdjacent(current.getLocation());
-            done.add(current);
             for (int i = 0; i < adj.length(); i++) {
                 Node adjNode = getNode(adj.get(i));
                 if (!done.contains(adjNode)) {
                     int le = current.getLength() + 1;
-                    if (!queue.contains(adjNode) || le < adjNode.getLength()) {
+                    if (!heap.contains(adjNode) || le < adjNode.getLength()) {
                         adjNode.setPrevious(current);
                         adjNode.setLength(current.getLength() + 1);
-                        steps.add(new Step(adjNode.getLocation(), Color.BLUE));
-                        queue.add(adjNode);
+                        steps.add(new Step(adjNode.getLocation(), Color.CYAN));
+                        heap.add(adjNode);
                     }
                 }
             }

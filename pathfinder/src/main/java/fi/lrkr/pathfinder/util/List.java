@@ -6,7 +6,7 @@ public class List<T> {
 
     private Object[] list;
     private int current;
-    private int defaultSize = 1;
+    private int defaultSize = 10;
 
     public List() {
         this.current = 0;

@@ -5,16 +5,16 @@ import fi.lrkr.pathfinder.vertex.Location;
 import fi.lrkr.pathfinder.vertex.Step;
 import fi.lrkr.pathfinder.vertex.Node;
 import fi.lrkr.pathfinder.util.List;
+import fi.lrkr.pathfinder.util.NodeHeap;
 import fi.lrkr.pathfinder.util.Queue;
 import java.awt.Color;
-import java.util.PriorityQueue;
 
 /**
  * Class implements A* search.
  */
 public class AStar extends Pathfinder {
 
-    private PriorityQueue&lt;Node&gt; queue;
+    private NodeHeap heap;
     private List&lt;Location&gt; done;
     private Node[][] nodes;
 
@@ -25,7 +25,7 @@ public class AStar extends Pathfinder {
      */
     public AStar(Maze maze) {
 <span class="fc" id="L27">        super(maze);</span>
-<span class="fc" id="L28">        this.queue = new PriorityQueue&lt;&gt;();</span>
+<span class="fc" id="L28">        this.heap = new NodeHeap();</span>
 <span class="fc" id="L29">        this.done = new List&lt;&gt;();</span>
 <span class="fc" id="L30">        nodes = new Node[maze.getHeight()][maze.getWidth()];</span>
 <span class="fc" id="L31">    }</span>
@@ -34,25 +34,25 @@ public class AStar extends Pathfinder {
     public Queue&lt;Step&gt; solve() {
 <span class="fc" id="L35">        Node start = getNode(maze.getStart());</span>
 <span class="fc" id="L36">        start.setLength(0);</span>
-<span class="fc" id="L37">        queue.add(start);</span>
-<span class="fc" id="L38">        steps.add(new Step(start.getLocation(), Color.BLUE));</span>
-<span class="fc bfc" id="L39" title="All 2 branches covered.">        while (!queue.isEmpty()) {</span>
-<span class="fc" id="L40">            Node current = queue.poll();</span>
-<span class="fc bfc" id="L41" title="All 2 branches covered.">            if (checkWin(current.getLocation())) {</span>
-<span class="fc" id="L42">                createPath(current);</span>
-<span class="fc" id="L43">                break;</span>
+<span class="fc" id="L37">        heap.add(start);</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        while (!heap.isEmpty()) {</span>
+<span class="fc" id="L39">            Node current = heap.poll();</span>
+<span class="fc" id="L40">            steps.add(new Step(current.getLocation(), Color.BLUE));</span>
+<span class="fc" id="L41">            done.add(current);</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">            if (checkWin(current.getLocation())) {</span>
+<span class="fc" id="L43">                createPath(current);</span>
+<span class="fc" id="L44">                break;</span>
             }
-<span class="fc" id="L45">            List&lt;Location&gt; adj = getAdjacent(current.getLocation());</span>
-<span class="fc" id="L46">            done.add(current);</span>
+<span class="fc" id="L46">            List&lt;Location&gt; adj = getAdjacent(current.getLocation());</span>
 <span class="fc bfc" id="L47" title="All 2 branches covered.">            for (int i = 0; i &lt; adj.length(); i++) {</span>
 <span class="fc" id="L48">                Node adjNode = getNode(adj.get(i));</span>
 <span class="fc bfc" id="L49" title="All 2 branches covered.">                if (!done.contains(adjNode)) {</span>
 <span class="fc" id="L50">                    int le = current.getLength() + 1;</span>
-<span class="pc bpc" id="L51" title="1 of 4 branches missed.">                    if (!queue.contains(adjNode) || le &lt; adjNode.getLength()) {</span>
+<span class="pc bpc" id="L51" title="1 of 4 branches missed.">                    if (!heap.contains(adjNode) || le &lt; adjNode.getLength()) {</span>
 <span class="fc" id="L52">                        adjNode.setPrevious(current);</span>
 <span class="fc" id="L53">                        adjNode.setLength(current.getLength() + 1);</span>
-<span class="fc" id="L54">                        steps.add(new Step(adjNode.getLocation(), Color.BLUE));</span>
-<span class="fc" id="L55">                        queue.add(adjNode);</span>
+<span class="fc" id="L54">                        steps.add(new Step(adjNode.getLocation(), Color.CYAN));</span>
+<span class="fc" id="L55">                        heap.add(adjNode);</span>
                     }
                 }
             }
