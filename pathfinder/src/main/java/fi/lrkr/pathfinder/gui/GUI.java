@@ -66,8 +66,6 @@ public class GUI implements Runnable {
             public void actionPerformed(ActionEvent e) {
                 Maze newMaze = settings.getSelected();
                 doMazePane(newMaze, contentPane);
-                frame.paintComponents(frame.getGraphics());
-                settings.paint(frame.getGraphics());
                 Pathfinder pf = new AStar(newMaze);
                 playback(pf.solve());
             }
@@ -82,7 +80,6 @@ public class GUI implements Runnable {
         mazePane.init();
         mazePane.setPreferredSize(new Dimension(600, 400));
         contentPane.add(mazePane, BorderLayout.NORTH);
-        
     }
 
     /**
@@ -96,7 +93,8 @@ public class GUI implements Runnable {
             if (System.currentTimeMillis() > time + 5) {
                 Step current = steps.removeFirst();
                 mazePane.paintCell(current);
-                mazePane.paintComponents(frame.getGraphics());
+                //flickeraa tän takia
+                frame.paintComponents(frame.getGraphics());
                 time = System.currentTimeMillis();
             }
         }
