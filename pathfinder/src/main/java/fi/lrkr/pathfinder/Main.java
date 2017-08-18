@@ -3,7 +3,7 @@ package fi.lrkr.pathfinder;
 import fi.lrkr.pathfinder.maze.Maze;
 import fi.lrkr.pathfinder.gui.GUI;
 import fi.lrkr.pathfinder.util.List;
-import file.MazeReader;
+import fi.lrkr.pathfinder.file.MazeReader;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 

@@ -64,6 +64,7 @@ public class MazePane extends JPanel {
      */
     public void paintCell(Step s) {
         labelMap[s.getLocation().getY()][s.getLocation().getX()].setBackground(s.getColor());
+        repaint();
     }
 
 }

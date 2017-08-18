@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 /**
  * Class provides a simple UI where the pathfinding visualization is shown.
@@ -25,6 +26,8 @@ public class GUI implements Runnable {
     private MazePane mazePane;
     private Settings settings;
     private JButton startButton;
+    private Timer timer;
+    private int counter;
 
     /**
      * Constructor for creating GUI object for visualizing the Maze object.
@@ -88,15 +91,24 @@ public class GUI implements Runnable {
      * @param steps Queue of Step objects
      */
     private void playback(Queue<Step> steps) {
-        Long time = System.currentTimeMillis();
-        while (!steps.isEmpty()) {
-            if (System.currentTimeMillis() > time + 5) {
-                Step current = steps.removeFirst();
-                mazePane.paintCell(current);
-                //flickeraa tän takia
-                frame.paintComponents(frame.getGraphics());
-                time = System.currentTimeMillis();
+        frame.paintComponents(frame.getGraphics());
+        counter = steps.lenght();
+        int delay = 10;
+
+        ActionListener action = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                if (counter == 0) {
+                    timer.stop();
+                } else {
+                    Step current = steps.removeFirst();
+                    mazePane.paintCell(current);
+                    counter--;
+                }
             }
-        }
+        };
+        timer = new Timer(delay, action);
+        timer.setInitialDelay(0);
+        timer.start();
     }
 }

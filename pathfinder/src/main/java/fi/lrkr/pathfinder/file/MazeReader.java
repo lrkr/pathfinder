@@ -1,4 +1,4 @@
-package file;
+package fi.lrkr.pathfinder.file;
 
 import fi.lrkr.pathfinder.maze.Maze;
 import fi.lrkr.pathfinder.util.List;
