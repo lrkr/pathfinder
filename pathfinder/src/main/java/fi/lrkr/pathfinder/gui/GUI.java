@@ -25,7 +25,6 @@ public class GUI implements Runnable {
     private JFrame frame;
     private MazePane mazePane;
     private Settings settings;
-    private JButton startButton;
     private Timer timer;
     private int counter;
 
@@ -41,7 +40,7 @@ public class GUI implements Runnable {
     @Override
     public void run() {
         frame = new JFrame("Pathfinder");
-        frame.setPreferredSize(new Dimension(800, 600));
+        //frame.setPreferredSize(new Dimension(800, 500));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         createComponents(frame.getContentPane());
         frame.pack();
@@ -59,17 +58,15 @@ public class GUI implements Runnable {
         settings.init();
         settings.setPreferredSize(new Dimension(600, 40));
         contentPane.add(settings, BorderLayout.CENTER);
-        startButton = new JButton("Start");
-        startButton.setPreferredSize(new Dimension(600, 40));
-        contentPane.add(startButton, BorderLayout.SOUTH);
         doMazePane(mazes.get(0), contentPane);
 
-        startButton.addActionListener(new ActionListener() {
+        settings.getStartButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Maze newMaze = settings.getSelected();
+                settings.getStartButton().setEnabled(false);
+                Maze newMaze = settings.getSelectedMaze();
                 doMazePane(newMaze, contentPane);
-                Pathfinder pf = new AStar(newMaze);
+                Pathfinder pf = settings.getSelectedAlgo();
                 playback(pf.solve());
             }
         });
@@ -100,6 +97,7 @@ public class GUI implements Runnable {
             public void actionPerformed(ActionEvent event) {
                 if (counter == 0) {
                     timer.stop();
+                    settings.getStartButton().setEnabled(true);
                 } else {
                     Step current = steps.removeFirst();
                     mazePane.paintCell(current);
