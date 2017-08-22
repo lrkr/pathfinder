@@ -52,6 +52,16 @@ public class GUI implements Runnable {
         settings = new Settings(mazes);
         settings.init();
         settings.setPreferredSize(new Dimension(600, 40));
+        settings.getMazeSelection().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!mazePane.isAllowEdit()) {
+                    return;
+                }
+                doMazePane(settings.getSelectedMaze(), contentPane);
+                frame.paintComponents(frame.getGraphics());
+            }
+        });
         contentPane.add(settings, BorderLayout.CENTER);
         doMazePane(mazes.get(0), contentPane);
 
@@ -88,7 +98,6 @@ public class GUI implements Runnable {
         frame.paintComponents(frame.getGraphics());
         counter = result.getLenght();
         int delay = 10 / settings.getSpeed();
-
         ActionListener action = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {

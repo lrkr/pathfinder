@@ -111,4 +111,8 @@ public class Settings extends JPanel {
     public int getSpeed() {
         return speed.getValue();
     }
+
+    public JComboBox getMazeSelection() {
+        return mazeSelection;
+    }
 }
