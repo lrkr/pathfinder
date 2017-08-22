@@ -23,13 +23,13 @@ public class BreadthFirst extends Pathfinder {
         super(maze);
         this.queue = new Queue<>();
         this.queue.add(maze.getStart());
-        steps.add(new Step(maze.getStart(), Color.blue));
     }
 
     @Override
     public Queue<Step> solve() {
         while (!queue.isEmpty()) {
             Location current = queue.removeFirst();
+            steps.add(new Step(current, Color.blue));
             if (checkWin(current)) {
                 createPath(current);
                 break;
@@ -38,7 +38,7 @@ public class BreadthFirst extends Pathfinder {
             for (int i = 0; i < adj.length(); i++) {
                 Location location = adj.get(i);
                 if (visited[location.getY()][location.getX()] == 0) {
-                    steps.add(new Step(location, Color.blue));
+                    steps.add(new Step(location, Color.cyan));
                     visited[location.getY()][location.getX()] = 1;
                     location.setPrevious(current);
                     queue.add(location);

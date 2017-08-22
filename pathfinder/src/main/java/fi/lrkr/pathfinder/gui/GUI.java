@@ -1,8 +1,6 @@
 package fi.lrkr.pathfinder.gui;
 
 import fi.lrkr.pathfinder.maze.Maze;
-import fi.lrkr.pathfinder.pathfinder.BreadthFirst;
-import fi.lrkr.pathfinder.pathfinder.AStar;
 import fi.lrkr.pathfinder.pathfinder.Pathfinder;
 import fi.lrkr.pathfinder.util.List;
 import fi.lrkr.pathfinder.vertex.Step;
@@ -12,7 +10,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
@@ -90,7 +87,7 @@ public class GUI implements Runnable {
     private void playback(Queue<Step> steps) {
         frame.paintComponents(frame.getGraphics());
         counter = steps.lenght();
-        int delay = 10;
+        int delay = 20 / settings.getSpeed();
 
         ActionListener action = new ActionListener() {
             @Override

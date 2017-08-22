@@ -48,8 +48,8 @@ public class BreadthFirstTest {
     public void testSolve() {
         Queue<Step> steps = testBFS.solve();
         assertNotNull(steps);
-        //16 looked cell steps + 14 path steps
-        assertEquals(30, steps.lenght());
+        //16 blue + 15 cyan + 14 red steps
+        assertEquals(45, steps.lenght());
         assertEquals(testMaze.getStart(), steps.removeFirst().getLocation());
         assertEquals(testMaze.getEnd(), steps.removeLast().getLocation());
     }

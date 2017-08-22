@@ -6,19 +6,22 @@ import fi.lrkr.pathfinder.pathfinder.BreadthFirst;
 import fi.lrkr.pathfinder.pathfinder.Pathfinder;
 import fi.lrkr.pathfinder.util.List;
 import java.awt.GridLayout;
+import java.util.Hashtable;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 
 /**
- * Class provides a simple ComboBox for selecting Mazes (and probably other
- * settings in the future).
+ * Class provides a simple settings for the visualization.
  */
 public class Settings extends JPanel {
 
     private List<Maze> mazes;
     private JComboBox mazeSelection;
     private JComboBox algoSelection;
+    private JSlider speed;
     private JButton start;
 
     /**
@@ -29,15 +32,16 @@ public class Settings extends JPanel {
     public Settings(List<Maze> mazes) {
         this.mazeSelection = new JComboBox<>();
         this.algoSelection = new JComboBox<>();
+        this.speed = new JSlider(JSlider.HORIZONTAL, 1, 11, 6);
         this.start = new JButton("Start");
         this.mazes = mazes;
     }
 
     /**
-     * Populates the ComboBox with selectable Mazes.
+     * Creates setting components
      */
     public void init() {
-        this.setLayout(new GridLayout(0, 3));
+        this.setLayout(new GridLayout(0, 4));
         for (int i = 0; i < mazes.length(); i++) {
             mazeSelection.addItem(mazes.get(i));
         }
@@ -46,6 +50,15 @@ public class Settings extends JPanel {
         algoSelection.addItem("BFS");
         algoSelection.addItem("A*");
         this.add(algoSelection);
+
+        Hashtable labelTable = new Hashtable();
+        labelTable.put(1, new JLabel("Slow"));
+        labelTable.put(10, new JLabel("Fast"));
+        speed.setLabelTable(labelTable);
+
+        speed.setPaintLabels(true);
+        speed.setPaintLabels(true);
+        this.add(speed);
         this.add(start);
     }
 
@@ -57,6 +70,10 @@ public class Settings extends JPanel {
         return (Maze) mazeSelection.getSelectedItem();
     }
 
+    /**
+     * 
+     * @return Pathfinder to be run
+     */
     public Pathfinder getSelectedAlgo() {
         String algo = (String) algoSelection.getSelectedItem();
         Maze maze = (Maze) mazeSelection.getSelectedItem();
@@ -70,8 +87,19 @@ public class Settings extends JPanel {
         }
     }
 
+    /**
+     * 
+     * @return Start button
+     */
     public JButton getStartButton() {
         return this.start;
     }
 
+    /**
+     * 
+     * @return Selected speed value
+     */
+    public int getSpeed() {
+        return speed.getValue();
+    }
 }

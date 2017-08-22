@@ -4,7 +4,6 @@ import fi.lrkr.pathfinder.maze.Maze;
 import fi.lrkr.pathfinder.vertex.Step;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
