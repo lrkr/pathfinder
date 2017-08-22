@@ -63,6 +63,7 @@ public class GUI implements Runnable {
                 settings.getStartButton().setEnabled(false);
                 Maze newMaze = settings.getSelectedMaze();
                 doMazePane(newMaze, contentPane);
+                mazePane.setAllowEdit(false);
                 Pathfinder pf = settings.getSelectedAlgo();
                 playback(pf.solve());
             }
@@ -95,6 +96,7 @@ public class GUI implements Runnable {
                 if (counter == 0) {
                     timer.stop();
                     settings.getStartButton().setEnabled(true);
+                    mazePane.setAllowEdit(true);
                 } else {
                     Step current = steps.removeFirst();
                     mazePane.paintCell(current);

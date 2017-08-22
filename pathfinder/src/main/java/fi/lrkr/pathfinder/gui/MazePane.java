@@ -18,6 +18,7 @@ public class MazePane extends JPanel {
     private Maze maze;
     private JLayeredPane boardPane;
     private JLabel[][] labelMap;
+    private boolean allowEdit;
 
     /**
      * Constructor for creating the object.
@@ -26,6 +27,7 @@ public class MazePane extends JPanel {
      */
     public MazePane(Maze maze) {
         this.maze = maze;
+        this.allowEdit = true;
     }
 
     /**
@@ -50,10 +52,36 @@ public class MazePane extends JPanel {
                 } else {
                     l.setBackground(Color.BLACK);
                 }
+                l.addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        if (allowEdit) {
+                            toggleCell(evt);
+                            repaint();
+                        }
+                    }
+                });
                 boardPane.add(l);
             }
         }
         this.add(boardPane);
+    }
+
+    private void toggleCell(java.awt.event.MouseEvent e) {
+        //todo: block start/end?
+        for (int y = 0; y < labelMap.length; y++) {
+            for (int x = 0; x < labelMap[0].length; x++) {
+                if (labelMap[y][x] == e.getSource()) {
+                    if (maze.getMaze()[y][x] == 0) {
+                        maze.getMaze()[y][x] = 1;
+                        labelMap[y][x].setBackground(Color.BLACK);
+                    } else if (maze.getMaze()[y][x] == 1) {
+                        maze.getMaze()[y][x] = 0;
+                        labelMap[y][x].setBackground(Color.WHITE);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -66,4 +94,7 @@ public class MazePane extends JPanel {
         repaint();
     }
 
+    public void setAllowEdit(boolean edit) {
+        this.allowEdit = edit;
+    }
 }
