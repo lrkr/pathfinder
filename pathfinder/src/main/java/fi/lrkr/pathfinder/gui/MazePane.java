@@ -16,7 +16,7 @@ public class MazePane extends JPanel {
 
     private Maze maze;
     private JLayeredPane boardPane;
-    private JLabel[][] labelMap;
+    private JLabel[][] labelArray;
     private boolean allowEdit;
 
     /**
@@ -38,18 +38,22 @@ public class MazePane extends JPanel {
         this.setLayout(new BorderLayout());
         boardPane = new JLayeredPane();
         boardPane.setLayout(new GridLayout(height, width));
-        this.labelMap = new JLabel[height][width];
+        this.labelArray = new JLabel[height][width];
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 JLabel l = new JLabel();
                 l.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 l.setOpaque(true);
-                labelMap[y][x] = l;
+                labelArray[y][x] = l;
                 if (maze.getMaze()[y][x] == 0) {
                     l.setBackground(Color.WHITE);
                 } else {
                     l.setBackground(Color.BLACK);
+                }
+                boardPane.add(l);
+                if ((y == maze.getStart().getY() && x == maze.getStart().getX()) || (y == maze.getEnd().getY() && x == maze.getEnd().getX())) {
+                    continue;
                 }
                 l.addMouseListener(new java.awt.event.MouseAdapter() {
                     @Override
@@ -60,23 +64,24 @@ public class MazePane extends JPanel {
                         }
                     }
                 });
-                boardPane.add(l);
+
             }
         }
+        labelArray[maze.getStart().getY()][maze.getStart().getX()].setBackground(Color.GREEN);
+        labelArray[maze.getEnd().getY()][maze.getEnd().getX()].setBackground(Color.RED);
         this.add(boardPane);
     }
 
     private void toggleCell(java.awt.event.MouseEvent e) {
-        //todo: block start/end?
-        for (int y = 0; y < labelMap.length; y++) {
-            for (int x = 0; x < labelMap[0].length; x++) {
-                if (labelMap[y][x] == e.getSource()) {
+        for (int y = 0; y < labelArray.length; y++) {
+            for (int x = 0; x < labelArray[0].length; x++) {
+                if (labelArray[y][x] == e.getSource()) {
                     if (maze.getMaze()[y][x] == 0) {
                         maze.getMaze()[y][x] = 1;
-                        labelMap[y][x].setBackground(Color.BLACK);
+                        labelArray[y][x].setBackground(Color.BLACK);
                     } else if (maze.getMaze()[y][x] == 1) {
                         maze.getMaze()[y][x] = 0;
-                        labelMap[y][x].setBackground(Color.WHITE);
+                        labelArray[y][x].setBackground(Color.WHITE);
                     }
                 }
             }
@@ -89,7 +94,7 @@ public class MazePane extends JPanel {
      * @param s Step object which associates a color to a Location.
      */
     public void paintCell(Step s) {
-        labelMap[s.getLocation().getY()][s.getLocation().getX()].setBackground(s.getColor());
+        labelArray[s.getLocation().getY()][s.getLocation().getX()].setBackground(s.getColor());
         repaint();
     }
 

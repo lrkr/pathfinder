@@ -52,8 +52,15 @@ public class Result {
         return this.route;
     }
 
+    @Override
     public String toString() {
-        return "Route lenght: " + route.lenght() + " --- Time (ms): " + time();
+        String r;
+        if (route.lenght() == 0) {
+            r = "No route found";
+        } else {
+            r = "Route lenght: " + route.lenght();
+        }
+        return r + " --- Time (ms): " + time();
     }
 
 }
