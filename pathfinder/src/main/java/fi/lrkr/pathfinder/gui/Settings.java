@@ -5,6 +5,7 @@ import fi.lrkr.pathfinder.pathfinder.AStar;
 import fi.lrkr.pathfinder.pathfinder.BreadthFirst;
 import fi.lrkr.pathfinder.pathfinder.Pathfinder;
 import fi.lrkr.pathfinder.pathfinder.heuristic.Manhattan;
+import fi.lrkr.pathfinder.pathfinder.heuristic.ManhattanCross;
 import fi.lrkr.pathfinder.pathfinder.heuristic.ManhattanNudged;
 import fi.lrkr.pathfinder.util.List;
 import java.awt.GridLayout;
@@ -52,6 +53,7 @@ public class Settings extends JPanel {
         algoSelection.addItem("BFS");
         algoSelection.addItem("A* (Manhattan)");
         algoSelection.addItem("A* (Nudged Manhattan)");
+        algoSelection.addItem("A* (Cross-product Manhattan)");
         this.add(algoSelection);
 
         Hashtable labelTable = new Hashtable();
@@ -87,6 +89,8 @@ public class Settings extends JPanel {
                 return new AStar(maze, new Manhattan());
             case "A* (Nudged Manhattan)":
                 return new AStar(maze, new ManhattanNudged());
+            case "A* (Cross-product Manhattan)":
+                return new AStar(maze, new ManhattanCross());
             default:
                 return null;
         }

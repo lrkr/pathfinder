@@ -72,7 +72,7 @@ public class AStar extends Pathfinder {
     private Node getNode(Location l) {
         Node node = nodes[l.getY()][l.getX()];
         if (node == null) {
-            node = new Node(l, heuristic.calculateHScore(l, maze.getEnd()));
+            node = new Node(l, heuristic.calculateHScore(l, maze.getEnd(), maze.getStart()));
             nodes[l.getY()][l.getX()] = node;
         }
         return node;

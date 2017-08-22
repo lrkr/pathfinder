@@ -37,6 +37,7 @@ public class NodeHeap {
         heap[1] = heap[size--];
         heap[1].setHeapIndex(1);
         heapify(1);
+        ret.setHeapIndex(-1);
         return ret;
     }
 
