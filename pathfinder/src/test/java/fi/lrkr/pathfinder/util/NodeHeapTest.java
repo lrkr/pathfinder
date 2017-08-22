@@ -48,7 +48,7 @@ public class NodeHeapTest {
         testNode4.setLength(1);
 
         Node testNode5 = testHeap.poll();
-        assertEquals(testNode4.getHeuristic(), testNode5.getHeuristic());
+        assertEquals(testNode4.getHeuristic(), testNode5.getHeuristic(), 0.0);
         assertEquals(testNode4, testNode5);
     }
 
@@ -67,9 +67,9 @@ public class NodeHeapTest {
     public void testContains() {
         Node testNode = new Node(new Location(1, 1), 20);
         testNode.setLength(5);
-        assertFalse(testHeap.contains(testNode));
+        assertEquals(-1, testHeap.contains(testNode));
         testHeap.add(testNode);
-        assertTrue(testHeap.contains(testNode));
+        assertEquals(1, testHeap.contains(testNode));
     }
 
 }

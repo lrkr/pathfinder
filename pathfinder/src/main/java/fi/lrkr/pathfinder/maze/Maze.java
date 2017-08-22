@@ -1,7 +1,6 @@
 package fi.lrkr.pathfinder.maze;
 
 import fi.lrkr.pathfinder.vertex.Location;
-import fi.lrkr.pathfinder.vertex.Step;
 
 /**
  * Class provides functionality for the maze on which the pathfinding algorithms

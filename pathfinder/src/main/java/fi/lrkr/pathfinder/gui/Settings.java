@@ -4,6 +4,8 @@ import fi.lrkr.pathfinder.maze.Maze;
 import fi.lrkr.pathfinder.pathfinder.AStar;
 import fi.lrkr.pathfinder.pathfinder.BreadthFirst;
 import fi.lrkr.pathfinder.pathfinder.Pathfinder;
+import fi.lrkr.pathfinder.pathfinder.heuristic.Manhattan;
+import fi.lrkr.pathfinder.pathfinder.heuristic.ManhattanNudged;
 import fi.lrkr.pathfinder.util.List;
 import java.awt.GridLayout;
 import java.util.Hashtable;
@@ -48,7 +50,8 @@ public class Settings extends JPanel {
         this.add(mazeSelection);
 
         algoSelection.addItem("BFS");
-        algoSelection.addItem("A*");
+        algoSelection.addItem("A* (Manhattan)");
+        algoSelection.addItem("A* (Nudged Manhattan)");
         this.add(algoSelection);
 
         Hashtable labelTable = new Hashtable();
@@ -71,7 +74,7 @@ public class Settings extends JPanel {
     }
 
     /**
-     * 
+     *
      * @return Pathfinder to be run
      */
     public Pathfinder getSelectedAlgo() {
@@ -80,15 +83,17 @@ public class Settings extends JPanel {
         switch (algo) {
             case "BFS":
                 return new BreadthFirst(maze);
-            case "A*":
-                return new AStar(maze);
+            case "A* (Manhattan)":
+                return new AStar(maze, new Manhattan());
+            case "A* (Nudged Manhattan)":
+                return new AStar(maze, new ManhattanNudged());
             default:
                 return null;
         }
     }
 
     /**
-     * 
+     *
      * @return Start button
      */
     public JButton getStartButton() {
@@ -96,7 +101,7 @@ public class Settings extends JPanel {
     }
 
     /**
-     * 
+     *
      * @return Selected speed value
      */
     public int getSpeed() {

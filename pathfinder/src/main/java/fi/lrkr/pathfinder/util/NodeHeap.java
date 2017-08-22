@@ -24,16 +24,18 @@ public class NodeHeap {
             doubleSize();
         }
         int i = size;
+        n.setHeapIndex(i);
+        heap[i] = n;
         while (i > 1 && n.compareTo(heap[parent(i)]) < 0) {
             swap(i, parent(i));
             i = parent(i);
         }
-        heap[i] = n;
     }
 
     public Node poll() {
         Node ret = heap[1];
         heap[1] = heap[size--];
+        heap[1].setHeapIndex(1);
         heapify(1);
         return ret;
     }
@@ -42,13 +44,19 @@ public class NodeHeap {
         return size == 0;
     }
 
-    public boolean contains(Node n) {
-        for (int i = 1; i <= size; i++) {
-            if (heap[i].equals(n)) {
-                return true;
-            }
+    public int contains(Node n) {
+        if (n.getHeapIndex() != -1) {
+            return n.getHeapIndex();
+        } else {
+            return -1;
         }
-        return false;
+    }
+
+    public void decKey(int index, double k) {
+        while (index > 1 && heap[parent(index)].getHeuristic() + heap[parent(index)].getLength() > k) {
+            swap(index, parent(index));
+            index = parent(index);
+        }
     }
 
     private void heapify(int i) {
@@ -85,6 +93,8 @@ public class NodeHeap {
         Node temp = heap[first];
         heap[first] = heap[second];
         heap[second] = temp;
+        heap[first].setHeapIndex(second);
+        heap[second].setHeapIndex(first);
     }
 
     private void doubleSize() {

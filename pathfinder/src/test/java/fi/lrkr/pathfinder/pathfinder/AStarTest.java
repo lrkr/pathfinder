@@ -1,9 +1,9 @@
 package fi.lrkr.pathfinder.pathfinder;
 
+import fi.lrkr.pathfinder.gui.Result;
 import fi.lrkr.pathfinder.maze.Maze;
-import fi.lrkr.pathfinder.util.Queue;
+import fi.lrkr.pathfinder.pathfinder.heuristic.Manhattan;
 import fi.lrkr.pathfinder.vertex.Location;
-import fi.lrkr.pathfinder.vertex.Step;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -36,7 +36,7 @@ public class AStarTest {
             {1, 0, 0, 0, 0, 1, 0, 0},
             {1, 1, 1, 1, 1, 1, 1, 1}};
         this.testMaze = new Maze(new Location(1, 0), new Location(7, 3), mazeArray, "testMaze");
-        this.testAStar = new AStar(testMaze);
+        this.testAStar = new AStar(testMaze, new Manhattan());
     }
 
     @After
@@ -45,18 +45,18 @@ public class AStarTest {
 
     @Test
     public void testSolve() {
-        Queue<Step> steps = testAStar.solve();
-        assertNotNull(steps);
+        Result result = testAStar.solve();
+        assertNotNull(result);
         //16 blue + 15 cyan + 14 red steps
-        assertEquals(45, steps.lenght());
-        assertEquals(testMaze.getStart(), steps.removeFirst().getLocation());
-        assertEquals(testMaze.getEnd(), steps.removeLast().getLocation());
+        assertEquals(45, result.getLenght());
+        assertEquals(testMaze.getStart(), result.getNext().getLocation());
+        assertEquals(testMaze.getEnd(), result.getRoute().removeLast().getLocation());
     }
 
     @Test
     public void testSolve2() {
         testMaze.getMaze()[1][1] = 1;
-        Queue<Step> steps = testAStar.solve();
-        assertEquals(1, steps.lenght());
+        Result result = testAStar.solve();
+        assertEquals(1, result.getLenght());
     }
 }

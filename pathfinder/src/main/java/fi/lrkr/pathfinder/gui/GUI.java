@@ -3,8 +3,6 @@ package fi.lrkr.pathfinder.gui;
 import fi.lrkr.pathfinder.maze.Maze;
 import fi.lrkr.pathfinder.pathfinder.Pathfinder;
 import fi.lrkr.pathfinder.util.List;
-import fi.lrkr.pathfinder.vertex.Step;
-import fi.lrkr.pathfinder.util.Queue;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -85,10 +83,11 @@ public class GUI implements Runnable {
      *
      * @param steps Queue of Step objects
      */
-    private void playback(Queue<Step> steps) {
+    private void playback(Result result) {
+        System.out.println(result);
         frame.paintComponents(frame.getGraphics());
-        counter = steps.lenght();
-        int delay = 20 / settings.getSpeed();
+        counter = result.getLenght();
+        int delay = 10 / settings.getSpeed();
 
         ActionListener action = new ActionListener() {
             @Override
@@ -98,7 +97,7 @@ public class GUI implements Runnable {
                     settings.getStartButton().setEnabled(true);
                     mazePane.setAllowEdit(true);
                 } else {
-                    Step current = steps.removeFirst();
+                    Step current = result.getNext();
                     mazePane.paintCell(current);
                     counter--;
                 }

@@ -1,11 +1,11 @@
 package fi.lrkr.pathfinder.pathfinder;
 
+import fi.lrkr.pathfinder.gui.Result;
 import fi.lrkr.pathfinder.maze.Maze;
 import fi.lrkr.pathfinder.vertex.Location;
 import fi.lrkr.pathfinder.vertex.Vertex;
-import fi.lrkr.pathfinder.vertex.Step;
+import fi.lrkr.pathfinder.gui.Step;
 import fi.lrkr.pathfinder.util.List;
-import fi.lrkr.pathfinder.util.Queue;
 import fi.lrkr.pathfinder.util.Stack;
 import java.awt.Color;
 
@@ -17,7 +17,7 @@ abstract public class Pathfinder {
 
     protected Maze maze;
     protected int[][] visited;
-    protected Queue<Step> steps;
+    protected Result result;
 
     /**
      * Constructor for creating Pathfinder objects.
@@ -25,7 +25,7 @@ abstract public class Pathfinder {
      * @param maze Maze on which the Pathfinder is used
      */
     public Pathfinder(Maze maze) {
-        this.steps = new Queue<>();
+        this.result = new Result();
         this.maze = maze;
         this.visited = new int[maze.getHeight()][maze.getWidth()];
         visited[maze.getStart().getY()][maze.getStart().getX()] = 1;
@@ -35,9 +35,9 @@ abstract public class Pathfinder {
      * Abstract method for solving the Maze. Each implementation uses its own
      * solve method.
      *
-     * @return Queue of Step objects used for visualization
+     * @return Result object containing the route and steps takens
      */
-    abstract public Queue<Step> solve();
+    abstract public Result solve();
 
     /**
      * After Pathfinder has reached the end this method backtracks to the start
@@ -53,7 +53,7 @@ abstract public class Pathfinder {
             l = l.getPrevious();
         }
         while (!path.isEmpty()) {
-            steps.add(new Step(path.pop().getLocation(), Color.red));
+            result.addToRoute(new Step(path.pop().getLocation(), Color.red));
         }
     }
 

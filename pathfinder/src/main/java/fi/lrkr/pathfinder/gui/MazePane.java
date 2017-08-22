@@ -1,7 +1,6 @@
 package fi.lrkr.pathfinder.gui;
 
 import fi.lrkr.pathfinder.maze.Maze;
-import fi.lrkr.pathfinder.vertex.Step;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;

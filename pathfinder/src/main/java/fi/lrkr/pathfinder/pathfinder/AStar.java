@@ -1,12 +1,13 @@
 package fi.lrkr.pathfinder.pathfinder;
 
+import fi.lrkr.pathfinder.gui.Result;
 import fi.lrkr.pathfinder.maze.Maze;
 import fi.lrkr.pathfinder.vertex.Location;
-import fi.lrkr.pathfinder.vertex.Step;
+import fi.lrkr.pathfinder.gui.Step;
+import fi.lrkr.pathfinder.pathfinder.heuristic.Heuristic;
 import fi.lrkr.pathfinder.vertex.Node;
 import fi.lrkr.pathfinder.util.List;
 import fi.lrkr.pathfinder.util.NodeHeap;
-import fi.lrkr.pathfinder.util.Queue;
 import java.awt.Color;
 
 /**
@@ -15,30 +16,32 @@ import java.awt.Color;
 public class AStar extends Pathfinder {
 
     private NodeHeap heap;
-    private List<Location> done;
     private Node[][] nodes;
+    private Heuristic heuristic;
 
     /**
      * Constructor for creating AStar search objects.
      *
      * @param maze Maze on which the A* is used on
+     * @param heuristic
      */
-    public AStar(Maze maze) {
+    public AStar(Maze maze, Heuristic heuristic) {
         super(maze);
         this.heap = new NodeHeap();
-        this.done = new List<>();
-        nodes = new Node[maze.getHeight()][maze.getWidth()];
+        this.nodes = new Node[maze.getHeight()][maze.getWidth()];
+        this.heuristic = heuristic;
     }
 
     @Override
-    public Queue<Step> solve() {
+    public Result solve() {
+        result.setStartTime(System.currentTimeMillis());
         Node start = getNode(maze.getStart());
         start.setLength(0);
         heap.add(start);
         while (!heap.isEmpty()) {
             Node current = heap.poll();
-            steps.add(new Step(current.getLocation(), Color.BLUE));
-            done.add(current);
+            result.addToStep(new Step(current.getLocation(), Color.BLUE));
+            current.setDone(true);
             if (checkWin(current.getLocation())) {
                 createPath(current);
                 break;
@@ -46,24 +49,30 @@ public class AStar extends Pathfinder {
             List<Location> adj = getAdjacent(current.getLocation());
             for (int i = 0; i < adj.length(); i++) {
                 Node adjNode = getNode(adj.get(i));
-                if (!done.contains(adjNode)) {
+                if (!adjNode.isDone()) {
                     int le = current.getLength() + 1;
-                    if (!heap.contains(adjNode) || le < adjNode.getLength()) {
+                    int contains = heap.contains(adjNode);
+                    if (contains == -1) {
                         adjNode.setPrevious(current);
-                        adjNode.setLength(current.getLength() + 1);
-                        steps.add(new Step(adjNode.getLocation(), Color.CYAN));
+                        adjNode.setLength(le);
+                        result.addToStep(new Step(adjNode.getLocation(), Color.CYAN));
                         heap.add(adjNode);
+                    } else if (le < adjNode.getLength()) {
+                        adjNode.setPrevious(current);
+                        adjNode.setLength(le);
+                        heap.decKey(contains, le + adjNode.getHeuristic());
                     }
                 }
             }
         }
-        return steps;
+        result.setEndTime(System.currentTimeMillis());
+        return result;
     }
 
     private Node getNode(Location l) {
         Node node = nodes[l.getY()][l.getX()];
         if (node == null) {
-            node = new Node(l, l.manhattan(maze.getEnd()));
+            node = new Node(l, heuristic.calculateHScore(l, maze.getEnd()));
             nodes[l.getY()][l.getX()] = node;
         }
         return node;

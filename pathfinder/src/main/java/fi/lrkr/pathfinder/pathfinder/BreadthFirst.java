@@ -1,8 +1,9 @@
 package fi.lrkr.pathfinder.pathfinder;
 
+import fi.lrkr.pathfinder.gui.Result;
 import fi.lrkr.pathfinder.maze.Maze;
 import fi.lrkr.pathfinder.vertex.Location;
-import fi.lrkr.pathfinder.vertex.Step;
+import fi.lrkr.pathfinder.gui.Step;
 import fi.lrkr.pathfinder.util.List;
 import fi.lrkr.pathfinder.util.Queue;
 import java.awt.Color;
@@ -26,10 +27,11 @@ public class BreadthFirst extends Pathfinder {
     }
 
     @Override
-    public Queue<Step> solve() {
+    public Result solve() {
+        result.setStartTime(System.currentTimeMillis());
         while (!queue.isEmpty()) {
             Location current = queue.removeFirst();
-            steps.add(new Step(current, Color.blue));
+            result.addToStep(new Step(current, Color.blue));
             if (checkWin(current)) {
                 createPath(current);
                 break;
@@ -38,13 +40,14 @@ public class BreadthFirst extends Pathfinder {
             for (int i = 0; i < adj.length(); i++) {
                 Location location = adj.get(i);
                 if (visited[location.getY()][location.getX()] == 0) {
-                    steps.add(new Step(location, Color.cyan));
+                    result.addToStep(new Step(location, Color.cyan));
                     visited[location.getY()][location.getX()] = 1;
                     location.setPrevious(current);
                     queue.add(location);
                 }
             }
         }
-        return steps;
+        result.setEndTime(System.currentTimeMillis());
+        return result;
     }
 }

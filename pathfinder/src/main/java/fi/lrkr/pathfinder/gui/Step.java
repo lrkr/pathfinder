@@ -1,5 +1,6 @@
-package fi.lrkr.pathfinder.vertex;
+package fi.lrkr.pathfinder.gui;
 
+import fi.lrkr.pathfinder.vertex.Location;
 import java.awt.Color;
 
 /**
