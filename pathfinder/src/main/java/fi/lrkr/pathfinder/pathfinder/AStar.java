@@ -38,6 +38,7 @@ public class AStar extends Pathfinder {
         Node start = getNode(maze.getStart());
         start.setLength(0);
         heap.add(start);
+        result.incrementNodes();
         while (!heap.isEmpty()) {
             Node current = heap.poll();
             result.addToStep(new Step(current.getLocation(), Color.BLUE));
@@ -57,6 +58,7 @@ public class AStar extends Pathfinder {
                         adjNode.setLength(le);
                         result.addToStep(new Step(adjNode.getLocation(), Color.CYAN));
                         heap.add(adjNode);
+                        result.incrementNodes();
                     } else if (le < adjNode.getLength()) {
                         adjNode.setPrevious(current);
                         adjNode.setLength(le);

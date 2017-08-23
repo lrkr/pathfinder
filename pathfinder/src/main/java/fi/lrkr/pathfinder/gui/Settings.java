@@ -11,6 +11,7 @@ import fi.lrkr.pathfinder.util.List;
 import java.awt.GridLayout;
 import java.util.Hashtable;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,6 +27,7 @@ public class Settings extends JPanel {
     private JComboBox algoSelection;
     private JSlider speed;
     private JButton start;
+    private JCheckBox skip;
 
     /**
      * Constructor for creating Settings object.
@@ -37,6 +39,7 @@ public class Settings extends JPanel {
         this.algoSelection = new JComboBox<>();
         this.speed = new JSlider(JSlider.HORIZONTAL, 1, 11, 6);
         this.start = new JButton("Start");
+        this.skip = new JCheckBox("Skip animation");
         this.mazes = mazes;
     }
 
@@ -44,7 +47,7 @@ public class Settings extends JPanel {
      * Creates setting components
      */
     public void init() {
-        this.setLayout(new GridLayout(0, 4));
+        this.setLayout(new GridLayout(0, 5));
         for (int i = 0; i < mazes.length(); i++) {
             mazeSelection.addItem(mazes.get(i));
         }
@@ -64,6 +67,7 @@ public class Settings extends JPanel {
         speed.setPaintLabels(true);
         speed.setPaintLabels(true);
         this.add(speed);
+        this.add(skip);
         this.add(start);
     }
 
@@ -114,5 +118,9 @@ public class Settings extends JPanel {
 
     public JComboBox getMazeSelection() {
         return mazeSelection;
+    }
+    
+    public boolean getSkip() {
+        return skip.isSelected();
     }
 }

@@ -6,12 +6,14 @@ public class Result {
 
     private Queue<Step> steps;
     private Queue<Step> route;
+    private int nodes;
     private long setStartTime;
     private long endTime;
 
     public Result() {
         this.steps = new Queue<>();
         this.route = new Queue<>();
+        this.nodes = 0;
     }
 
     public void setStartTime(long s) {
@@ -51,6 +53,10 @@ public class Result {
     public Queue<Step> getRoute() {
         return this.route;
     }
+    
+    public void incrementNodes() {
+        nodes++;
+    }
 
     @Override
     public String toString() {
@@ -60,7 +66,7 @@ public class Result {
         } else {
             r = "Route lenght: " + route.lenght();
         }
-        return r + " --- Time (ms): " + time();
+        return r + " --- Time (ms): " + time() + " --- Nodes added to queue: " + nodes;
     }
 
 }

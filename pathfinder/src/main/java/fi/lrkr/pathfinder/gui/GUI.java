@@ -20,6 +20,7 @@ public class GUI implements Runnable {
     private JFrame frame;
     private MazePane mazePane;
     private Settings settings;
+    private Info info;
     private Timer timer;
     private int counter;
 
@@ -49,9 +50,12 @@ public class GUI implements Runnable {
      */
     private void createComponents(Container contentPane) {
         contentPane.setLayout(new BorderLayout());
+        info = new Info();
+        info.init();
+        contentPane.add(info, BorderLayout.CENTER);
         settings = new Settings(mazes);
         settings.init();
-        settings.setPreferredSize(new Dimension(600, 40));
+        settings.setPreferredSize(new Dimension(600, 35));
         settings.getMazeSelection().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,7 +66,7 @@ public class GUI implements Runnable {
                 frame.paintComponents(frame.getGraphics());
             }
         });
-        contentPane.add(settings, BorderLayout.CENTER);
+        contentPane.add(settings, BorderLayout.SOUTH);
         doMazePane(mazes.get(0), contentPane);
 
         settings.getStartButton().addActionListener(new ActionListener() {
@@ -94,8 +98,11 @@ public class GUI implements Runnable {
      * @param steps Queue of Step objects
      */
     private void playback(Result result) {
-        System.out.println(result);
+        info.addText(result.toString());
         frame.paintComponents(frame.getGraphics());
+        if (settings.getSkip()) {
+            drawNoTimer(result);
+        }
         counter = result.getLenght();
         int delay = 10 / settings.getSpeed();
         ActionListener action = new ActionListener() {
@@ -115,5 +122,13 @@ public class GUI implements Runnable {
         timer = new Timer(delay, action);
         timer.setInitialDelay(0);
         timer.start();
+    }
+
+    private void drawNoTimer(Result result) {
+        Step next = result.getNext();
+        while (next != null) {
+            mazePane.paintCell(next);
+            next = result.getNext();
+        }
     }
 }
