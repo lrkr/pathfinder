@@ -116,10 +116,18 @@ public class Settings extends JPanel {
         return speed.getValue();
     }
 
+    /**
+     *
+     * @return MazeSelection JComboBox
+     */
     public JComboBox getMazeSelection() {
         return mazeSelection;
     }
-    
+
+    /**
+     *
+     * @return Boolean value of the skip checkbox
+     */
     public boolean getSkip() {
         return skip.isSelected();
     }

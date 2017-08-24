@@ -34,7 +34,7 @@ public class AStar extends Pathfinder {
 
     @Override
     public Result solve() {
-        result.setStartTime(System.currentTimeMillis());
+        result.setStartTime();
         Node start = getNode(maze.getStart());
         start.setLength(0);
         heap.add(start);
@@ -67,7 +67,7 @@ public class AStar extends Pathfinder {
                 }
             }
         }
-        result.setEndTime(System.currentTimeMillis());
+        result.setEndTime();
         return result;
     }
 

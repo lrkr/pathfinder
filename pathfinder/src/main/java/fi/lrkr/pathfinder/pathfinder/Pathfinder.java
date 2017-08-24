@@ -16,7 +16,6 @@ import java.awt.Color;
 abstract public class Pathfinder {
 
     protected Maze maze;
-    protected int[][] visited;
     protected Result result;
 
     /**
@@ -27,8 +26,6 @@ abstract public class Pathfinder {
     public Pathfinder(Maze maze) {
         this.result = new Result();
         this.maze = maze;
-        this.visited = new int[maze.getHeight()][maze.getWidth()];
-        visited[maze.getStart().getY()][maze.getStart().getX()] = 1;
     }
 
     /**

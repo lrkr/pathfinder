@@ -18,6 +18,11 @@ public class NodeHeap {
         this.size = 0;
     }
 
+    /**
+     * Adds a Node to the Heap.
+     *
+     * @param n Node to be added
+     */
     public void add(Node n) {
         size++;
         if (size >= heap.length) {
@@ -32,6 +37,11 @@ public class NodeHeap {
         }
     }
 
+    /**
+     * Returns and deletes the first Node in the Heap.
+     *
+     * @return First node in the Heap
+     */
     public Node poll() {
         Node ret = heap[1];
         heap[1] = heap[size--];
@@ -45,6 +55,12 @@ public class NodeHeap {
         return size == 0;
     }
 
+    /**
+     * Checks if the Node is contained in the Heap.
+     *
+     * @param n Node to be checked
+     * @return Index of the Node in the Heap
+     */
     public int contains(Node n) {
         if (n.getHeapIndex() != -1) {
             return n.getHeapIndex();

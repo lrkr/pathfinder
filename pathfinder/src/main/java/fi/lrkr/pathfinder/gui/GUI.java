@@ -98,7 +98,7 @@ public class GUI implements Runnable {
      * @param steps Queue of Step objects
      */
     private void playback(Result result) {
-        info.addText(result.toString());
+        info.setText(result.toString());
         frame.paintComponents(frame.getGraphics());
         if (settings.getSkip()) {
             drawNoTimer(result);

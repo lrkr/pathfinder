@@ -13,6 +13,7 @@ import java.awt.Color;
  */
 public class BreadthFirst extends Pathfinder {
 
+    protected int[][] visited;
     private Queue<Location> queue;
 
     /**
@@ -22,13 +23,15 @@ public class BreadthFirst extends Pathfinder {
      */
     public BreadthFirst(Maze maze) {
         super(maze);
+        this.visited = new int[maze.getHeight()][maze.getWidth()];
         this.queue = new Queue<>();
     }
 
     @Override
     public Result solve() {
-        result.setStartTime(System.currentTimeMillis());
+        result.setStartTime();
         queue.add(maze.getStart());
+        visited[maze.getStart().getY()][maze.getStart().getX()] = 1;
         result.incrementNodes();
         while (!queue.isEmpty()) {
             Location current = queue.removeFirst();
@@ -49,7 +52,7 @@ public class BreadthFirst extends Pathfinder {
                 }
             }
         }
-        result.setEndTime(System.currentTimeMillis());
+        result.setEndTime();
         return result;
     }
 }

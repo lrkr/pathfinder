@@ -1,7 +1,12 @@
 package fi.lrkr.pathfinder.gui;
 
 import fi.lrkr.pathfinder.util.Queue;
+import java.util.concurrent.TimeUnit;
 
+/**
+ * Class provides book keeping for Pathfinder so that the Pathfinder's Steps can
+ * be played back and stats can be shown.
+ */
 public class Result {
 
     private Queue<Step> steps;
@@ -10,22 +15,25 @@ public class Result {
     private long setStartTime;
     private long endTime;
 
+    /**
+     * Constructor for creating Result object.
+     */
     public Result() {
         this.steps = new Queue<>();
         this.route = new Queue<>();
         this.nodes = 0;
     }
 
-    public void setStartTime(long s) {
-        this.setStartTime = s;
+    public void setStartTime() {
+        this.setStartTime = System.nanoTime();
     }
 
-    public void setEndTime(long s) {
-        this.endTime = s;
+    public void setEndTime() {
+        this.endTime = System.nanoTime();
     }
 
     private long time() {
-        return this.endTime - this.setStartTime;
+        return TimeUnit.NANOSECONDS.toMicros(endTime - setStartTime);
     }
 
     public void addToStep(Step s) {
@@ -40,6 +48,11 @@ public class Result {
         return steps.lenght() + route.lenght();
     }
 
+    /**
+     * Method returns the Pathfinder's solve method's steps in sequence.
+     *
+     * @return Next step in the Pathfinder's solve method
+     */
     public Step getNext() {
         if (steps.lenght() != 0) {
             return steps.removeFirst();
@@ -53,7 +66,11 @@ public class Result {
     public Queue<Step> getRoute() {
         return this.route;
     }
-    
+
+    /**
+     * Increments nodes variable which represents amount added to Queue by the
+     * Pathfinder.
+     */
     public void incrementNodes() {
         nodes++;
     }
@@ -66,7 +83,7 @@ public class Result {
         } else {
             r = "Route lenght: " + route.lenght();
         }
-        return r + " --- Time (ms): " + time() + " --- Nodes added to queue: " + nodes;
+        return r + " --- Time (\u00B5s): " + time() + " --- Nodes added to queue: " + nodes;
     }
 
 }

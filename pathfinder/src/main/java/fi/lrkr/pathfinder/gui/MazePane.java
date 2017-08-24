@@ -98,12 +98,21 @@ public class MazePane extends JPanel {
         repaint();
     }
 
+    /**
+     * Sets allowEdit boolean
+     *
+     * @param edit
+     */
     public void setAllowEdit(boolean edit) {
         this.allowEdit = edit;
     }
 
+    /**
+     *
+     * @return Boolean value for editability
+     */
     public boolean isAllowEdit() {
         return allowEdit;
     }
-    
+
 }
