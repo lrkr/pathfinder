@@ -7,7 +7,7 @@ Jotta kurssiin liittyvää asiaa saisi eteenpäin toteutin minimikeon, joka ehkä jo
 
 Ensi viikolla teen algoritmin valinnan käyttöliittymään, toivottavasti viimein lisää reitinhakualgoritmeja ja ehkäpä statsiboksin jossen ole täysin hajonnut Swingiin.
 
-Tiedoston lukeminen ja labyrintin parsiminen: 2 tuntia
+Tiedoston lukeminen ja labyrintin parsiminen: 2 tuntia  
 Swing: 6 tuntia  
 Minimikeko: 2 tuntia  
 Random säätö: 2 tuntia  

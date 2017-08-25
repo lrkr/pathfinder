@@ -3,89 +3,120 @@
 import fi.lrkr.pathfinder.vertex.Node;
 import java.util.Arrays;
 
+/**
+ * Class provides functionality for min heap with Node objects.
+ *
+ */
 public class NodeHeap {
 
     private Node[] heap;
-<span class="fc" id="L9">    private int defaultSize = 10;</span>
+<span class="fc" id="L13">    private int defaultSize = 10;</span>
     private int size;
 
-<span class="fc" id="L12">    public NodeHeap() {</span>
-<span class="fc" id="L13">        this.heap = new Node[defaultSize + 1];</span>
-<span class="fc" id="L14">        this.size = 0;</span>
-<span class="fc" id="L15">    }</span>
+<span class="fc" id="L16">    public NodeHeap() {</span>
+<span class="fc" id="L17">        this.heap = new Node[defaultSize + 1];</span>
+<span class="fc" id="L18">        this.size = 0;</span>
+<span class="fc" id="L19">    }</span>
 
+    /**
+     * Adds a Node to the Heap.
+     *
+     * @param n Node to be added
+     */
     public void add(Node n) {
-<span class="fc" id="L18">        size++;</span>
-<span class="pc bpc" id="L19" title="1 of 2 branches missed.">        if (size &gt;= heap.length) {</span>
-<span class="nc" id="L20">            doubleSize();</span>
+<span class="fc" id="L27">        size++;</span>
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">        if (size &gt;= heap.length) {</span>
+<span class="nc" id="L29">            doubleSize();</span>
         }
-<span class="fc" id="L22">        int i = size;</span>
-<span class="fc bfc" id="L23" title="All 4 branches covered.">        while (i &gt; 1 &amp;&amp; n.compareTo(heap[parent(i)]) &lt; 0) {</span>
-<span class="fc" id="L24">            swap(i, parent(i));</span>
-<span class="fc" id="L25">            i = parent(i);</span>
+<span class="fc" id="L31">        int i = size;</span>
+<span class="fc" id="L32">        n.setHeapIndex(i);</span>
+<span class="fc" id="L33">        heap[i] = n;</span>
+<span class="fc bfc" id="L34" title="All 4 branches covered.">        while (i &gt; 1 &amp;&amp; n.compareTo(heap[parent(i)]) &lt; 0) {</span>
+<span class="fc" id="L35">            swap(i, parent(i));</span>
+<span class="fc" id="L36">            i = parent(i);</span>
         }
-<span class="fc" id="L27">        heap[i] = n;</span>
-<span class="fc" id="L28">    }</span>
+<span class="fc" id="L38">    }</span>
 
+    /**
+     * Returns and deletes the first Node in the Heap.
+     *
+     * @return First node in the Heap
+     */
     public Node poll() {
-<span class="fc" id="L31">        Node ret = heap[1];</span>
-<span class="fc" id="L32">        heap[1] = heap[size--];</span>
-<span class="fc" id="L33">        heapify(1);</span>
-<span class="fc" id="L34">        return ret;</span>
+<span class="fc" id="L46">        Node ret = heap[1];</span>
+<span class="fc" id="L47">        heap[1] = heap[size--];</span>
+<span class="fc" id="L48">        heap[1].setHeapIndex(1);</span>
+<span class="fc" id="L49">        heapify(1);</span>
+<span class="fc" id="L50">        ret.setHeapIndex(-1);</span>
+<span class="fc" id="L51">        return ret;</span>
     }
 
     public boolean isEmpty() {
-<span class="fc bfc" id="L38" title="All 2 branches covered.">        return size == 0;</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        return size == 0;</span>
     }
 
-    public boolean contains(Node n) {
-<span class="fc bfc" id="L42" title="All 2 branches covered.">        for (int i = 1; i &lt;= size; i++) {</span>
-<span class="fc bfc" id="L43" title="All 2 branches covered.">            if (heap[i].equals(n)) {</span>
-<span class="fc" id="L44">                return true;</span>
-            }
+    /**
+     * Checks if the Node is contained in the Heap.
+     *
+     * @param n Node to be checked
+     * @return Index of the Node in the Heap
+     */
+    public int contains(Node n) {
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (n.getHeapIndex() != -1) {</span>
+<span class="fc" id="L66">            return n.getHeapIndex();</span>
+        } else {
+<span class="fc" id="L68">            return -1;</span>
         }
-<span class="fc" id="L47">        return false;</span>
     }
+
+    public void decKey(int index, double k) {
+<span class="pc bpc" id="L73" title="1 of 4 branches missed.">        while (index &gt; 1 &amp;&amp; heap[parent(index)].getHeuristic() + heap[parent(index)].getLength() &gt; k) {</span>
+<span class="fc" id="L74">            swap(index, parent(index));</span>
+<span class="fc" id="L75">            index = parent(index);</span>
+        }
+<span class="fc" id="L77">    }</span>
 
     private void heapify(int i) {
         int min;
-<span class="fc" id="L52">        int l = left(i);</span>
-<span class="fc" id="L53">        int r = right(i);</span>
-<span class="pc bpc" id="L54" title="3 of 4 branches missed.">        if (l &lt;= size &amp;&amp; heap[l].compareTo(heap[i]) &lt; 0) {</span>
-<span class="nc" id="L55">            min = l;</span>
+<span class="fc" id="L81">        int l = left(i);</span>
+<span class="fc" id="L82">        int r = right(i);</span>
+<span class="pc bpc" id="L83" title="3 of 4 branches missed.">        if (l &lt;= size &amp;&amp; heap[l].compareTo(heap[i]) &lt; 0) {</span>
+<span class="nc" id="L84">            min = l;</span>
         } else {
-<span class="fc" id="L57">            min = i;</span>
+<span class="fc" id="L86">            min = i;</span>
         }
-<span class="pc bpc" id="L59" title="3 of 4 branches missed.">        if (r &lt;= size &amp;&amp; heap[r].compareTo(heap[min]) &lt; 0) {</span>
-<span class="nc" id="L60">            min = r;</span>
+<span class="pc bpc" id="L88" title="3 of 4 branches missed.">        if (r &lt;= size &amp;&amp; heap[r].compareTo(heap[min]) &lt; 0) {</span>
+<span class="nc" id="L89">            min = r;</span>
         }
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        if (min != i) {</span>
-<span class="nc" id="L63">            swap(i, min);</span>
-<span class="nc" id="L64">            heapify(min);</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (min != i) {</span>
+<span class="nc" id="L92">            swap(i, min);</span>
+<span class="nc" id="L93">            heapify(min);</span>
         }
-<span class="fc" id="L66">    }</span>
+<span class="fc" id="L95">    }</span>
 
     private int parent(int i) {
-<span class="fc" id="L69">        return i / 2;</span>
+<span class="fc" id="L98">        return i / 2;</span>
     }
 
     private int left(int i) {
-<span class="fc" id="L73">        return (2 * i);</span>
+<span class="fc" id="L102">        return (2 * i);</span>
     }
 
     private int right(int i) {
-<span class="fc" id="L77">        return (2 * i) + 1;</span>
+<span class="fc" id="L106">        return (2 * i) + 1;</span>
     }
 
     private void swap(int first, int second) {
-<span class="fc" id="L81">        Node temp = heap[first];</span>
-<span class="fc" id="L82">        heap[first] = heap[second];</span>
-<span class="fc" id="L83">        heap[second] = temp;</span>
-<span class="fc" id="L84">    }</span>
+<span class="fc" id="L110">        Node temp = heap[first];</span>
+<span class="fc" id="L111">        heap[first] = heap[second];</span>
+<span class="fc" id="L112">        heap[second] = temp;</span>
+<span class="fc" id="L113">        heap[first].setHeapIndex(first);</span>
+<span class="fc" id="L114">        heap[second].setHeapIndex(second);</span>
+<span class="fc" id="L115">    }</span>
 
     private void doubleSize() {
-<span class="nc" id="L87">        int doubledSize = heap.length * 2;</span>
-<span class="nc" id="L88">        heap = Arrays.copyOf(heap, doubledSize);</span>
-<span class="nc" id="L89">    }</span>
+<span class="nc" id="L118">        int doubledSize = heap.length * 2;</span>
+<span class="nc" id="L119">        heap = Arrays.copyOf(heap, doubledSize);</span>
+<span class="nc" id="L120">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

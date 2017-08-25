@@ -56,17 +56,6 @@ public class Location implements Vertex {
         return this.previous;
     }
 
-    /**
-     * Calculates the Manhattan distance between this Location and parameter
-     * Location.
-     *
-     * @param l1 Location to which distance is calculated
-     * @return Manhattan distance
-     */
-    public int manhattan(Location l1) {
-        return Math.abs(this.x - l1.x) + Math.abs(this.y - l1.y);
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null || obj.getClass() != Location.class) {

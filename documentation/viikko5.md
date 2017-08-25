@@ -5,14 +5,16 @@ Swingin säätäminen oli tällä viikolla yllättävän helppoa. Esimerkiksi labyrintin
 
 Tein heuristiikasta rajapinnan ja lisäilin A\*:lle parit eri heuristiikat. 
 
-Katselmoin viime viikolla samantapaista projektia ja nappasin sieltä parit ideat omaan käyttöön: node oliot ylläpitävät itse tietoa heapin indeksistään ja done-statuksesta, jolloin heapin containsin ja donen tarkistamisen aikavaativuudet tippuivat lineaarisesta vakioaikaiseen. Tein myös kekoon decKey metodin. Pienissä labyrinteissäni nämä muutokset nopeuttivat A\*:ia 5-10 kertaisesti.
+Katselmoin viime viikolla samantapaista projektia ja nappasin sieltä parit ideat omaan käyttöön: node oliot ylläpitävät itse tietoa heapin indeksistään ja done-statuksesta, jolloin heapin containsin ja donen tarkistamisen aikavaativuudet tippuivat lineaarisesta vakioaikaiseen. Tein myös kekoon decKey metodin. Labyrinteissäni nämä muutokset nopeuttivat A\*:ia 5-10 kertaisesti.
+
+Testejä tehdessä oli vähän hällä väliä fiilis, koska kaikki näytti toimivan. Löysin kuitenkin keon toteutuksesta bugin erittäin simppelin testin avulla. Tästä pitäisi ottaa opiksi...
 
 Ensi viikolla viimeinkin JPS:n kimppuun. Lisäksi ajattelin korjailla ja refaktoroida koodia paremmaksi. Ainakin Mazen parsimisessa on vielä bugi parin viikon takaa.
 
 
 Käyttöliittymä: 6 tuntia  
 Heuristiikat: 1 tunti  
-A\* ja keon parantelut: 2 tuntia
-Javadoc + testit: 1 tunti
-Koodikatselmointi: 
-Yhteensä:  tuntia
+A\* ja keon parantelut: 2 tuntia  
+Javadoc + testit: 2 tuntia  
+Koodikatselmointi: 1 tunti  
+Yhteensä: 12 tuntia

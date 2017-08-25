@@ -12,7 +12,7 @@ public class Result {
     private Queue<Step> steps;
     private Queue<Step> route;
     private int nodes;
-    private long setStartTime;
+    private long startTime;
     private long endTime;
 
     /**
@@ -25,7 +25,7 @@ public class Result {
     }
 
     public void setStartTime() {
-        this.setStartTime = System.nanoTime();
+        this.startTime = System.nanoTime();
     }
 
     public void setEndTime() {
@@ -33,7 +33,7 @@ public class Result {
     }
 
     private long time() {
-        return TimeUnit.NANOSECONDS.toMicros(endTime - setStartTime);
+        return TimeUnit.NANOSECONDS.toMicros(endTime - startTime);
     }
 
     public void addToStep(Step s) {

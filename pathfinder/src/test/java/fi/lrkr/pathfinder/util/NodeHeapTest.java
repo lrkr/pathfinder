@@ -72,4 +72,18 @@ public class NodeHeapTest {
         assertEquals(1, testHeap.contains(testNode));
     }
 
+    @Test
+    public void testDecKey() {
+        Node testNode = new Node(new Location(1, 1), 20);
+        testNode.setLength(10);
+        Node testNode2 = new Node(new Location(1, 2), 15);
+        testNode2.setLength(10);
+        testHeap.add(testNode);
+        testHeap.add(testNode2);
+        testNode.setLength(1);
+        testHeap.decKey(testNode.getHeapIndex(), testNode.getHeuristic() + testNode.getLength());
+        Node testNode3 = testHeap.poll();
+        assertTrue(testNode3.getLocation().equals(new Location(1, 1)));
+    }
+
 }

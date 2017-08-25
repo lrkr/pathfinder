@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AStar.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pathfinder</a> &gt; <a href="index.source.html" class="el_package">fi.lrkr.pathfinder.pathfinder</a> &gt; <span class="el_source">AStar.java</span></div><h1>AStar.java</h1><pre class="source lang-java linenums">package fi.lrkr.pathfinder.pathfinder;
 
+import fi.lrkr.pathfinder.gui.Result;
 import fi.lrkr.pathfinder.maze.Maze;
 import fi.lrkr.pathfinder.vertex.Location;
-import fi.lrkr.pathfinder.vertex.Step;
+import fi.lrkr.pathfinder.gui.Step;
+import fi.lrkr.pathfinder.pathfinder.heuristic.Heuristic;
 import fi.lrkr.pathfinder.vertex.Node;
 import fi.lrkr.pathfinder.util.List;
 import fi.lrkr.pathfinder.util.NodeHeap;
-import fi.lrkr.pathfinder.util.Queue;
 import java.awt.Color;
 
 /**
@@ -15,58 +16,68 @@ import java.awt.Color;
 public class AStar extends Pathfinder {
 
     private NodeHeap heap;
-    private List&lt;Location&gt; done;
     private Node[][] nodes;
+    private Heuristic heuristic;
 
     /**
      * Constructor for creating AStar search objects.
      *
      * @param maze Maze on which the A* is used on
+     * @param heuristic
      */
-    public AStar(Maze maze) {
-<span class="fc" id="L27">        super(maze);</span>
-<span class="fc" id="L28">        this.heap = new NodeHeap();</span>
-<span class="fc" id="L29">        this.done = new List&lt;&gt;();</span>
-<span class="fc" id="L30">        nodes = new Node[maze.getHeight()][maze.getWidth()];</span>
-<span class="fc" id="L31">    }</span>
+    public AStar(Maze maze, Heuristic heuristic) {
+<span class="fc" id="L29">        super(maze);</span>
+<span class="fc" id="L30">        this.heap = new NodeHeap();</span>
+<span class="fc" id="L31">        this.nodes = new Node[maze.getHeight()][maze.getWidth()];</span>
+<span class="fc" id="L32">        this.heuristic = heuristic;</span>
+<span class="fc" id="L33">    }</span>
 
     @Override
-    public Queue&lt;Step&gt; solve() {
-<span class="fc" id="L35">        Node start = getNode(maze.getStart());</span>
-<span class="fc" id="L36">        start.setLength(0);</span>
-<span class="fc" id="L37">        heap.add(start);</span>
-<span class="fc bfc" id="L38" title="All 2 branches covered.">        while (!heap.isEmpty()) {</span>
-<span class="fc" id="L39">            Node current = heap.poll();</span>
-<span class="fc" id="L40">            steps.add(new Step(current.getLocation(), Color.BLUE));</span>
-<span class="fc" id="L41">            done.add(current);</span>
-<span class="fc bfc" id="L42" title="All 2 branches covered.">            if (checkWin(current.getLocation())) {</span>
-<span class="fc" id="L43">                createPath(current);</span>
-<span class="fc" id="L44">                break;</span>
+    public Result solve() {
+<span class="fc" id="L37">        result.setStartTime();</span>
+<span class="fc" id="L38">        Node start = getNode(maze.getStart());</span>
+<span class="fc" id="L39">        start.setLength(0);</span>
+<span class="fc" id="L40">        heap.add(start);</span>
+<span class="fc" id="L41">        result.incrementNodes();</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        while (!heap.isEmpty()) {</span>
+<span class="fc" id="L43">            Node current = heap.poll();</span>
+<span class="fc" id="L44">            result.addToStep(new Step(current.getLocation(), Color.BLUE));</span>
+<span class="fc" id="L45">            current.setDone(true);</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">            if (checkWin(current.getLocation())) {</span>
+<span class="fc" id="L47">                createPath(current);</span>
+<span class="fc" id="L48">                break;</span>
             }
-<span class="fc" id="L46">            List&lt;Location&gt; adj = getAdjacent(current.getLocation());</span>
-<span class="fc bfc" id="L47" title="All 2 branches covered.">            for (int i = 0; i &lt; adj.length(); i++) {</span>
-<span class="fc" id="L48">                Node adjNode = getNode(adj.get(i));</span>
-<span class="fc bfc" id="L49" title="All 2 branches covered.">                if (!done.contains(adjNode)) {</span>
-<span class="fc" id="L50">                    int le = current.getLength() + 1;</span>
-<span class="pc bpc" id="L51" title="1 of 4 branches missed.">                    if (!heap.contains(adjNode) || le &lt; adjNode.getLength()) {</span>
-<span class="fc" id="L52">                        adjNode.setPrevious(current);</span>
-<span class="fc" id="L53">                        adjNode.setLength(current.getLength() + 1);</span>
-<span class="fc" id="L54">                        steps.add(new Step(adjNode.getLocation(), Color.CYAN));</span>
-<span class="fc" id="L55">                        heap.add(adjNode);</span>
+<span class="fc" id="L50">            List&lt;Location&gt; adj = getAdjacent(current.getLocation());</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">            for (int i = 0; i &lt; adj.length(); i++) {</span>
+<span class="fc" id="L52">                Node adjNode = getNode(adj.get(i));</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">                if (!adjNode.isDone()) {</span>
+<span class="fc" id="L54">                    int le = current.getLength() + 1;</span>
+<span class="fc" id="L55">                    int contains = heap.contains(adjNode);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">                    if (contains == -1) {</span>
+<span class="fc" id="L57">                        adjNode.setPrevious(current);</span>
+<span class="fc" id="L58">                        adjNode.setLength(le);</span>
+<span class="fc" id="L59">                        result.addToStep(new Step(adjNode.getLocation(), Color.CYAN));</span>
+<span class="fc" id="L60">                        heap.add(adjNode);</span>
+<span class="fc" id="L61">                        result.incrementNodes();</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">                    } else if (le &lt; adjNode.getLength()) {</span>
+<span class="nc" id="L63">                        adjNode.setPrevious(current);</span>
+<span class="nc" id="L64">                        adjNode.setLength(le);</span>
+<span class="nc" id="L65">                        heap.decKey(contains, le + adjNode.getHeuristic());</span>
                     }
                 }
             }
-<span class="fc" id="L59">        }</span>
-<span class="fc" id="L60">        return steps;</span>
+<span class="fc" id="L69">        }</span>
+<span class="fc" id="L70">        result.setEndTime();</span>
+<span class="fc" id="L71">        return result;</span>
     }
 
     private Node getNode(Location l) {
-<span class="fc" id="L64">        Node node = nodes[l.getY()][l.getX()];</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (node == null) {</span>
-<span class="fc" id="L66">            node = new Node(l, l.manhattan(maze.getEnd()));</span>
-<span class="fc" id="L67">            nodes[l.getY()][l.getX()] = node;</span>
+<span class="fc" id="L75">        Node node = nodes[l.getY()][l.getX()];</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (node == null) {</span>
+<span class="fc" id="L77">            node = new Node(l, heuristic.calculateHScore(l, maze.getEnd(), maze.getStart()));</span>
+<span class="fc" id="L78">            nodes[l.getY()][l.getX()] = node;</span>
         }
-<span class="fc" id="L69">        return node;</span>
+<span class="fc" id="L80">        return node;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

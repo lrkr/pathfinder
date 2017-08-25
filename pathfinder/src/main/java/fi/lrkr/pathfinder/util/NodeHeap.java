@@ -110,8 +110,8 @@ public class NodeHeap {
         Node temp = heap[first];
         heap[first] = heap[second];
         heap[second] = temp;
-        heap[first].setHeapIndex(second);
-        heap[second].setHeapIndex(first);
+        heap[first].setHeapIndex(first);
+        heap[second].setHeapIndex(second);
     }
 
     private void doubleSize() {

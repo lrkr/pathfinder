@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ManhattanCross.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pathfinder</a> &gt; <a href="index.source.html" class="el_package">fi.lrkr.pathfinder.pathfinder.heuristic</a> &gt; <span class="el_source">ManhattanCross.java</span></div><h1>ManhattanCross.java</h1><pre class="source lang-java linenums">package fi.lrkr.pathfinder.pathfinder.heuristic;
+
+import fi.lrkr.pathfinder.vertex.Location;
+import fi.lrkr.pathfinder.vertex.Vertex;
+
+<span class="fc" id="L6">public class ManhattanCross implements Heuristic {</span>
+
+    @Override
+    public double calculateHScore(Vertex v1, Vertex v2, Vertex v3) {
+        double h;
+<span class="fc" id="L11">        Location l1 = v1.getLocation();</span>
+<span class="fc" id="L12">        Location l2 = v2.getLocation();</span>
+<span class="fc" id="L13">        Location start = v3.getLocation();        </span>
+<span class="fc" id="L14">        double dx1 = l1.getX() - l2.getX();</span>
+<span class="fc" id="L15">        double dy1 = l1.getY() - l2.getY();</span>
+<span class="fc" id="L16">        double dx2 = start.getX() - l2.getX();</span>
+<span class="fc" id="L17">        double dy2 = start.getY() - l2.getY();</span>
+<span class="fc" id="L18">        double cross = Math.abs(dx1 * dy2 - dx2 * dy1);</span>
+<span class="fc" id="L19">        h = Math.abs(dx1) + Math.abs(dy1);</span>
+<span class="fc" id="L20">        h += cross * 0.001;</span>
+<span class="fc" id="L21">        return h;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
