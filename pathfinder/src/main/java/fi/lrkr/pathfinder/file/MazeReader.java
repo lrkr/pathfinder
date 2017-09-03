@@ -56,31 +56,44 @@ public class MazeReader {
             }
             Location start = getStartOrEnd(mazeArray, new Location(-1, -1));
             Location end = getStartOrEnd(mazeArray, start);
-            mazes.add(new Maze(start, end, mazeArray, file.getName()));
+            if (start != null && end != null) {
+                mazes.add(new Maze(start, end, mazeArray, file.getName()));
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    //todo: ei varmaan toimi jos start ja end samalla vaaka- tai pystylinjalla..
     private Location getStartOrEnd(int[][] mazeArray, Location start) {
         for (int y = 0; y < mazeArray.length; y++) {
-            if (mazeArray[y][0] == 0 && start.getY() != y) {
+            if (mazeArray[y][0] == 0) {
+                if (start.getY() == y && start.getX() == 0) {
+                    continue;
+                }
                 return new Location(0, y);
             }
         }
         for (int y = 0; y < mazeArray.length; y++) {
-            if (mazeArray[y][mazeArray[0].length - 1] == 0 && start.getY() != y) {
+            if (mazeArray[y][mazeArray[0].length - 1] == 0) {
+                if (start.getY() == y && start.getX() == mazeArray[0].length - 1) {
+                    continue;
+                }
                 return new Location(mazeArray[0].length - 1, y);
             }
         }
-        for (int x = 1; x < mazeArray[0].length - 2; x++) {
-            if (mazeArray[0][x] == 0 && start.getX() != x) {
+        for (int x = 1; x < mazeArray[0].length - 1; x++) {
+            if (mazeArray[0][x] == 0) {
+                if (start.getY() == 0 && start.getX() == x) {
+                    continue;
+                }
                 return new Location(x, 0);
             }
         }
-        for (int x = 1; x < mazeArray[0].length - 2; x++) {
-            if (mazeArray[mazeArray.length - 1][x] == 0 && start.getX() != x) {
+        for (int x = 1; x < mazeArray[0].length - 1; x++) {
+            if (mazeArray[mazeArray.length - 1][x] == 0) {
+                if (start.getY() == mazeArray.length - 1 && start.getX() == x) {
+                    continue;
+                }
                 return new Location(x, mazeArray.length - 1);
             }
         }

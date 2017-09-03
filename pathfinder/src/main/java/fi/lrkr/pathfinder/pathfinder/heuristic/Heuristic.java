@@ -14,7 +14,7 @@ public interface Heuristic {
      * @param v1 Current Vertex
      * @param v2 End Vertex
      * @param v3 Start Vertex
-     * @return
+     * @return heuristic score
      */
     public double calculateHScore(Vertex v1, Vertex v2, Vertex v3);
 }

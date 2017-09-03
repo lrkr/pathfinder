@@ -18,6 +18,12 @@ run {
     standardInput = System.in
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'fi.lrkr.pathfinder.Main'
+    }
+}
+
 jacocoTestReport {
     reports {
         xml.enabled false

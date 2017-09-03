@@ -45,7 +45,7 @@ public class Location implements Vertex {
      * simpler this way as you there is no need to juggle two different objects
      * with the algorithms..
      *
-     * @param l
+     * @param l Location object
      */
     public void setPrevious(Location l) {
         this.previous = l;

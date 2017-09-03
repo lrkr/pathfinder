@@ -17,9 +17,9 @@ public class MazeReader {
     /**
      * Constructor for creating MazeReader object.
      */
-<span class="nc" id="L20">    public MazeReader() {</span>
-<span class="nc" id="L21">        this.mazes = new List&lt;&gt;();</span>
-<span class="nc" id="L22">    }</span>
+<span class="fc" id="L20">    public MazeReader() {</span>
+<span class="fc" id="L21">        this.mazes = new List&lt;&gt;();</span>
+<span class="fc" id="L22">    }</span>
 
     /**
      * Reads .txt files containing Maze representations and creates Maze objects
@@ -28,63 +28,76 @@ public class MazeReader {
      * @return List of read Maze objects
      */
     public List&lt;Maze&gt; readMazes() {
-<span class="nc" id="L31">        File folder = new File(System.getProperty(&quot;user.dir&quot;) + &quot;/mazes/&quot;);</span>
-<span class="nc" id="L32">        File[] mazeList = folder.listFiles();</span>
-<span class="nc bnc" id="L33" title="All 2 branches missed.">        for (File file : mazeList) {</span>
-<span class="nc bnc" id="L34" title="All 2 branches missed.">            if (!file.getName().endsWith(&quot;.txt&quot;)) {</span>
+<span class="fc" id="L31">        File folder = new File(System.getProperty(&quot;user.dir&quot;) + &quot;/mazes/&quot;);</span>
+<span class="fc" id="L32">        File[] mazeList = folder.listFiles();</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        for (File file : mazeList) {</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">            if (!file.getName().endsWith(&quot;.txt&quot;)) {</span>
 <span class="nc" id="L35">                continue;</span>
             }
-<span class="nc" id="L37">            parseMaze(file);</span>
+<span class="fc" id="L37">            parseMaze(file);</span>
         }
-<span class="nc" id="L39">        return mazes;</span>
+<span class="fc" id="L39">        return mazes;</span>
     }
 
     private void parseMaze(File file) {
         try {
-<span class="nc" id="L44">            Scanner scanner = new Scanner(file);</span>
-<span class="nc" id="L45">            List&lt;String&gt; lines = new List&lt;&gt;();</span>
-<span class="nc bnc" id="L46" title="All 2 branches missed.">            while (scanner.hasNextLine()) {</span>
-<span class="nc" id="L47">                lines.add(scanner.nextLine());</span>
+<span class="fc" id="L44">            Scanner scanner = new Scanner(file);</span>
+<span class="fc" id="L45">            List&lt;String&gt; lines = new List&lt;&gt;();</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">            while (scanner.hasNextLine()) {</span>
+<span class="fc" id="L47">                lines.add(scanner.nextLine());</span>
             }
-<span class="nc" id="L49">            int w = lines.get(0).length();</span>
-<span class="nc" id="L50">            int h = lines.length();</span>
-<span class="nc" id="L51">            int[][] mazeArray = new int[h][w];</span>
-<span class="nc bnc" id="L52" title="All 2 branches missed.">            for (int y = 0; y &lt; lines.length(); y++) {</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">                for (int x = 0; x &lt; lines.get(y).length(); x++) {</span>
-<span class="nc" id="L54">                    mazeArray[y][x] = lines.get(y).charAt(x) - 48;</span>
+<span class="fc" id="L49">            int w = lines.get(0).length();</span>
+<span class="fc" id="L50">            int h = lines.length();</span>
+<span class="fc" id="L51">            int[][] mazeArray = new int[h][w];</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            for (int y = 0; y &lt; lines.length(); y++) {</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">                for (int x = 0; x &lt; lines.get(y).length(); x++) {</span>
+<span class="fc" id="L54">                    mazeArray[y][x] = lines.get(y).charAt(x) - 48;</span>
                 }
             }
-<span class="nc" id="L57">            Location start = getStartOrEnd(mazeArray, new Location(-1, -1));</span>
-<span class="nc" id="L58">            Location end = getStartOrEnd(mazeArray, start);</span>
-<span class="nc" id="L59">            mazes.add(new Maze(start, end, mazeArray, file.getName()));</span>
-<span class="nc" id="L60">        } catch (Exception e) {</span>
-<span class="nc" id="L61">            throw new RuntimeException(e);</span>
-<span class="nc" id="L62">        }</span>
-<span class="nc" id="L63">    }</span>
+<span class="fc" id="L57">            Location start = getStartOrEnd(mazeArray, new Location(-1, -1));</span>
+<span class="fc" id="L58">            Location end = getStartOrEnd(mazeArray, start);</span>
+<span class="pc bpc" id="L59" title="2 of 4 branches missed.">            if (start != null &amp;&amp; end != null) {</span>
+<span class="fc" id="L60">                mazes.add(new Maze(start, end, mazeArray, file.getName()));</span>
+            }
+<span class="nc" id="L62">        } catch (Exception e) {</span>
+<span class="nc" id="L63">            throw new RuntimeException(e);</span>
+<span class="fc" id="L64">        }</span>
+<span class="fc" id="L65">    }</span>
 
-    //todo: ei varmaan toimi jos start ja end samalla vaaka- tai pystylinjalla..
     private Location getStartOrEnd(int[][] mazeArray, Location start) {
-<span class="nc bnc" id="L67" title="All 2 branches missed.">        for (int y = 0; y &lt; mazeArray.length; y++) {</span>
-<span class="nc bnc" id="L68" title="All 4 branches missed.">            if (mazeArray[y][0] == 0 &amp;&amp; start.getY() != y) {</span>
-<span class="nc" id="L69">                return new Location(0, y);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        for (int y = 0; y &lt; mazeArray.length; y++) {</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">            if (mazeArray[y][0] == 0) {</span>
+<span class="pc bpc" id="L70" title="1 of 4 branches missed.">                if (start.getY() == y &amp;&amp; start.getX() == 0) {</span>
+<span class="fc" id="L71">                    continue;</span>
+                }
+<span class="fc" id="L73">                return new Location(0, y);</span>
             }
         }
-<span class="nc bnc" id="L72" title="All 2 branches missed.">        for (int y = 0; y &lt; mazeArray.length; y++) {</span>
-<span class="nc bnc" id="L73" title="All 4 branches missed.">            if (mazeArray[y][mazeArray[0].length - 1] == 0 &amp;&amp; start.getY() != y) {</span>
-<span class="nc" id="L74">                return new Location(mazeArray[0].length - 1, y);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        for (int y = 0; y &lt; mazeArray.length; y++) {</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">            if (mazeArray[y][mazeArray[0].length - 1] == 0) {</span>
+<span class="pc bpc" id="L78" title="3 of 4 branches missed.">                if (start.getY() == y &amp;&amp; start.getX() == mazeArray[0].length - 1) {</span>
+<span class="nc" id="L79">                    continue;</span>
+                }
+<span class="fc" id="L81">                return new Location(mazeArray[0].length - 1, y);</span>
             }
         }
-<span class="nc bnc" id="L77" title="All 2 branches missed.">        for (int x = 1; x &lt; mazeArray[0].length - 2; x++) {</span>
-<span class="nc bnc" id="L78" title="All 4 branches missed.">            if (mazeArray[0][x] == 0 &amp;&amp; start.getX() != x) {</span>
-<span class="nc" id="L79">                return new Location(x, 0);</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        for (int x = 1; x &lt; mazeArray[0].length - 1; x++) {</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            if (mazeArray[0][x] == 0) {</span>
+<span class="pc bpc" id="L86" title="1 of 4 branches missed.">                if (start.getY() == 0 &amp;&amp; start.getX() == x) {</span>
+<span class="fc" id="L87">                    continue;</span>
+                }
+<span class="fc" id="L89">                return new Location(x, 0);</span>
             }
         }
-<span class="nc bnc" id="L82" title="All 2 branches missed.">        for (int x = 1; x &lt; mazeArray[0].length - 2; x++) {</span>
-<span class="nc bnc" id="L83" title="All 4 branches missed.">            if (mazeArray[mazeArray.length - 1][x] == 0 &amp;&amp; start.getX() != x) {</span>
-<span class="nc" id="L84">                return new Location(x, mazeArray.length - 1);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        for (int x = 1; x &lt; mazeArray[0].length - 1; x++) {</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">            if (mazeArray[mazeArray.length - 1][x] == 0) {</span>
+<span class="pc bpc" id="L94" title="3 of 4 branches missed.">                if (start.getY() == mazeArray.length - 1 &amp;&amp; start.getX() == x) {</span>
+<span class="nc" id="L95">                    continue;</span>
+                }
+<span class="fc" id="L97">                return new Location(x, mazeArray.length - 1);</span>
             }
         }
-<span class="nc" id="L87">        return null;</span>
+<span class="nc" id="L100">        return null;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
